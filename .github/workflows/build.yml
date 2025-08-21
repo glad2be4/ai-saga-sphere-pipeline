@@ -1,4 +1,4 @@
-name: AI Saga Sphere — DOCX to Audio, Feed, Pages, OneDrive
+name: AI Saga Sphere — DOCX/TXT → Audio → RSS → Pages (+OneDrive)
 on:
   push: { paths: ['source/**','.github/workflows/**','scripts/**'] }
   workflow_dispatch:
@@ -14,26 +14,21 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y ffmpeg jq rclone
           pip install python-docx gtts requests
-      - name: Parse DOCX/TXT → SSML
-        run: |
-          mkdir -p work public
-          python scripts/parse_docx.py
-      - name: Synthesize (ElevenLabs if key; else gTTS)
+      - name: Parse + Speak (ElevenLabs if key; else gTTS)
         env: { ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }} }
         run: |
-          python scripts/tts_synth.py
-      - name: Assemble & Master (−18 LUFS / −2 dBTP)
+          mkdir -p work public
+          python scripts/speak.py
+      - name: Master to −18 LUFS / −2 dBTP
         run: |
           mkdir -p work/masters
-          for f in work/tts_cache/*; do
-            b="work/masters/$(basename "${f%.*}").wav"
-            ffmpeg -y -i "$f" -af "loudnorm=I=-18:TP=-2:LRA=11:print_format=summary" "$b" >/dev/null 2>&1
+          for f in work/tts/*; do
+            out="work/masters/$(basename "${f%.*}").wav"
+            ffmpeg -y -i "$f" -af "loudnorm=I=-18:TP=-2:LRA=11:print_format=summary" "$out" >/dev/null 2>&1
           done
       - name: Build RSS feed
         env: { FEED_URL: ${{ vars.FEED_URL }} }
-        run: |
-          python scripts/build_feed.py
-          sed -i "s|FEED_URL|${FEED_URL}|g; s|FEED_BASE|${FEED_URL%/*}|" public/feed.xml
+        run: python scripts/build_feed.py
       - name: Mirror to OneDrive (optional)
         if: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }}
         env: { RCLONE_CONFIG_ONEDRIVE: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }} }

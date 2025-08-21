@@ -1,33 +1,28 @@
-import os, subprocess, datetime, json
+import os, subprocess, datetime
 from pathlib import Path
-AUDIO_OUT=Path("public/audio"); AUDIO_OUT.mkdir(parents=True, exist_ok=True)
+AUDIO=Path("public/audio"); AUDIO.mkdir(parents=True,exist_ok=True)
 FEED=Path("public/feed.xml"); masters=sorted(Path("work/masters").glob("*.wav"))
-def transcode(src:Path)->Path:
-    dst=AUDIO_OUT/f"{src.stem}.mp3"
+def mp3(src:Path)->Path:
+    dst=AUDIO/f"{src.stem}.mp3"
     if not dst.exists():
-        subprocess.check_call(["ffmpeg","-y","-i",str(src),"-c:a","libmp3lame","-b:a","128k",str(dst)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.check_call(["ffmpeg","-y","-i",str(src),"-c:a","libmp3lame","-b:a","128k",str(dst)],
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return dst
 items=[]
-for wav in masters:
-    mp3=transcode(wav)
-    size=mp3.stat().st_size
-    dur=subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration","-of","default=nw=1:nk=1", str(mp3)]).decode().strip().split('.')[0]
-    items.append((mp3.name,size,dur))
-feed=f'''<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
- <channel>
-  <title>AI SAGA SPHERE</title>
-  <link>FEED_URL</link>
-  <description>Codex‑sealed, AI‑only narrated audiobook continuum.</description>
-'''
+for w in masters:
+    m=mp3(w); size=m.stat().st_size
+    dur=subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration","-of","default=nw=1:nk=1",str(m)]).decode().strip().split('.')[0]
+    items.append((m.name,size,dur))
+base=os.getenv("FEED_URL","").rsplit("/",1)[0] if os.getenv("FEED_URL") else ""
+feed=['<?xml version="1.0" encoding="UTF-8"?>','<rss version="2.0">',' <channel>',
+      '  <title>AI SAGA SPHERE</title>', f'  <link>{os.getenv("FEED_URL","")}</link>',
+      '  <description>Codex‑sealed, AI‑only narrated audiobook continuum.</description>']
 for name,size,dur in items:
-    feed+=f'''
-  <item>
-    <title>{name}</title>
-    <enclosure url="FEED_BASE/audio/{name}" type="audio/mpeg" length="{size}"/>
-    <itunes:duration>{dur}</itunes:duration>
-    <pubDate>{datetime.datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S +0000')}</pubDate>
-  </item>'''
-feed+='\n </channel>\n</rss>\n'
-FEED.write_text(feed, encoding="utf-8")
+    feed+=['  <item>',f'    <title>{name}</title>',
+           f'    <enclosure url="{base}/audio/{name}" type="audio/mpeg" length="{size}"/>',
+           f'    <itunes:duration>{dur}</itunes:duration>',
+           f'    <pubDate>{datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate>',
+           '  </item>']
+feed+=[' </channel>','</rss>']
+FEED.write_text("\n".join(feed),encoding="utf-8")
 print("[feed] ->", FEED)
