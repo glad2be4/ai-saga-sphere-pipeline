@@ -9,7 +9,7 @@ def pick_voice():
         r=requests.get("https://api.elevenlabs.io/v1/voices",headers={"xi-api-key":API},timeout=30)
         if r.ok and r.json().get("voices"): return r.json()["voices"][0]["voice_id"]
     except Exception: pass
-    return "EXAVITQu4vr4xnSDxMaL"  # public sample
+    return "EXAVITQu4vr4xnSDxMaL"
 def el(text,out):
     url=f"https://api.elevenlabs.io/v1/text-to-speech/{pick_voice()}"
     hdr={"xi-api-key":API,"accept":"audio/mpeg","content-type":"application/json"}
