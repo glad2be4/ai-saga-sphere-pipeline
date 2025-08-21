@@ -1,4 +1,4 @@
-name: AI Saga Sphere — Production Loop (Audio + RSS + Pages + Mirrors + Recovery)
+name: AI Saga Sphere — Production (synthesize.py + Master + RSS + Pages + Mirrors + Recovery)
 on:
   push: { paths: ['source/**','scripts/**','.github/workflows/**'] }
   workflow_dispatch:
@@ -14,12 +14,11 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y ffmpeg jq rclone zip xxd
           pip install python-docx gtts requests
-      - name: Parse + Speak (EL primary; gTTS fallback)
+      - name: Parse + Narrate (Codex synthesize.py)
         env: { ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }} }
         run: |
-          mkdir -p work public
-          python scripts/parse_docx.py
-          python scripts/speak.py
+          mkdir -p work public logs
+          python scripts/synthesize.py
       - name: Master to −18 LUFS / −2 dBTP
         run: |
           mkdir -p work/masters
@@ -35,7 +34,7 @@ jobs:
           mkdir -p public/fragments
           head -n 4 source/book0_story_premise.txt > public/fragments/fragment1.txt || true
           tail -n 4 source/book0_story_premise.txt > public/fragments/fragment2.txt || true
-      - name: Recovery Kit (zip or AES-GCM encrypted)
+      - name: Recovery Kit (zip or AES-GCM)
         env:
           ENC_AES_KEY: ${{ secrets.ENC_AES_KEY }}
           ENC_AES_IV:  ${{ secrets.ENC_AES_IV }}
@@ -95,14 +94,10 @@ jobs:
           FEED_URL:            ${{ vars.FEED_URL }}
           PODCASTINDEX_KEY:    ${{ secrets.PODCASTINDEX_KEY }}
           PODCASTINDEX_SECRET: ${{ secrets.PODCASTINDEX_SECRET }}
-        run: |
-          bash -lc 'cat > np.sh <<EOS
-          $(sed "s/\\$/\\\\$/g" scripts/notify_podcastindex.sh)
-          EOS
-          bash np.sh'
+        run: bash scripts/notify_podcastindex.sh
 
   verify_recovery:
-    needs: [deploy]
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Codex integrity
