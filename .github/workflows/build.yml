@@ -1,0 +1,33 @@
+name: AI Saga Sphere – Full Audio Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install gtts
+      - name: Generate audio
+        run: |
+          mkdir -p output
+          echo "Hello Sphere. This is your first pipeline audio test." > output/test.txt
+          python - <<PYCODE
+from gtts import gTTS
+text=open("output/test.txt").read()
+tts=gTTS(text)
+tts.save("output/test.mp3")
+PYCODE
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: audio
+          path: output/
