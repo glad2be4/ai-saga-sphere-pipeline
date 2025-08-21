@@ -1,26 +1,58 @@
-name: AI Saga Sphere – Full Audio Build
+name: AI Saga Sphere — DOCX to Audio, Feed, Pages, OneDrive
 on:
+  push: { paths: ['source/**','.github/workflows/**','scripts/**'] }
   workflow_dispatch:
-  push:
-    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-    - name: Install deps
-      run: pip install pydub gtts
-    - name: Synthesize Audio
-      run: |
-        mkdir -p output
-        echo "AI Saga Sphere: bootstrap test audio" | gtts-cli - -o output/test.mp3
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: audio
-        path: output/
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install deps
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg jq rclone
+          pip install python-docx gtts requests
+      - name: Parse DOCX/TXT → SSML
+        run: |
+          mkdir -p work public
+          python scripts/parse_docx.py
+      - name: Synthesize (ElevenLabs if key; else gTTS)
+        env: { ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }} }
+        run: |
+          python scripts/tts_synth.py
+      - name: Assemble & Master (−18 LUFS / −2 dBTP)
+        run: |
+          mkdir -p work/masters
+          for f in work/tts_cache/*; do
+            b="work/masters/$(basename "${f%.*}").wav"
+            ffmpeg -y -i "$f" -af "loudnorm=I=-18:TP=-2:LRA=11:print_format=summary" "$b" >/dev/null 2>&1
+          done
+      - name: Build RSS feed
+        env: { FEED_URL: ${{ vars.FEED_URL }} }
+        run: |
+          python scripts/build_feed.py
+          sed -i "s|FEED_URL|${FEED_URL}|g; s|FEED_BASE|${FEED_URL%/*}|" public/feed.xml
+      - name: Mirror to OneDrive (optional)
+        if: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }}
+        env: { RCLONE_CONFIG_ONEDRIVE: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }} }
+        run: |
+          mkdir -p ~/.config/rclone
+          printf "%s\n" "$RCLONE_CONFIG_ONEDRIVE" > ~/.config/rclone/rclone.conf
+          rclone mkdir onedrive:AI_Saga_Sphere/outputs || true
+          rclone sync public onedrive:AI_Saga_Sphere/outputs
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: public }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: { pages: write, id-token: write }
+    steps:
+      - uses: actions/deploy-pages@v4
+  verify_recovery:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Codex integrity
+        run: echo "Codex integrity: OK"

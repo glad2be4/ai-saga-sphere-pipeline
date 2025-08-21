@@ -1,0 +1,66 @@
+cd ~/repo/ai-saga-sphere-pipeline
+git add .github/workflows/build.yml
+git commit -m "Add initial Codex build workflow"
+git push -u origin maingh workflow run "AI Saga Sphere – Full Audio Build" -R glad2be4/ai-saga-sphere-pipeline
+name: AI Saga Sphere — Autonomic Build
+on:
+  push: { paths: ['source/**','config/**','.github/workflows/**','scripts/**'] }
+  schedule: [ { cron: '0 6 * * *' } ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get update -y && sudo apt-get install -y ffmpeg rclone jq curl unzip
+
+      # reconstruct rclone.conf from secret
+      - name: Rebuild rclone.conf
+        env: { RCLONE_CONFIG_ONEDRIVE: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }} }
+        run: |
+          mkdir -p ~/.config/rclone
+          printf "%s\n" "$RCLONE_CONFIG_ONEDRIVE" > ~/.config/rclone/rclone.conf
+
+      # placeholder source/config if none exist yet
+      - run: mkdir -p source config work public
+
+      # parse → ssml → tts → build → package — simple stubs here
+      - run: echo "AI SAGA SPHERE feed build" > public/index.html
+      - run: echo "<rss><channel><title>AI SAGA SPHERE</title></channel></rss>" > public/feed.xml
+
+      # mirror to OneDrive
+      - name: Mirror outputs to OneDrive
+        run: |
+          rclone mkdir onedrive:AI_Saga_Sphere/outputs || true
+          rclone sync public onedrive:AI_Saga_Sphere/outputs
+
+      # simple site artifact
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: public }
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: { pages: write, id-token: write }
+    steps:
+      - uses: actions/deploy-pages@v4
+
+  notify_directories:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: ${{ success() && secrets.PODCASTINDEX_KEY && secrets.PODCASTINDEX_SECRET }}
+    steps:
+      - name: Notify PodcastIndex
+        env:
+          PODCASTINDEX_KEY:    ${{ secrets.PODCASTINDEX_KEY }}
+          PODCASTINDEX_SECRET: ${{ secrets.PODCASTINDEX_SECRET }}
+          FEED_URL:            '${{ vars.FEED_URL }}'
+        run: |
+          TS=$(date +%s)
+          curl -s -G "https://api.podcastindex.org/api/1.0/add/byfeedurl" \
+            --data-urlencode "url=$FEED_URL" \
+            -H "X-Auth-Date: $TS" \
+            -H "X-Auth-Key: $PODCASTINDEX_KEY" \
+            -H "Authorization: $PODCASTINDEX_SECRET" \
+            -H "User-Agent: AISagaSphere/1.0" | tee podcastindex_response.json
