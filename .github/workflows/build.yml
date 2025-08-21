@@ -1,6 +1,6 @@
-name: AI Saga Sphere — DOCX/TXT → Audio → RSS → Pages (+OneDrive)
+name: AI Saga Sphere — DOCX/TXT → Audio → RSS → Pages (OneDrive + IPNS + Recovery)
 on:
-  push: { paths: ['source/**','.github/workflows/**','scripts/**'] }
+  push: { paths: ['source/**','scripts/**','.github/workflows/**'] }
   workflow_dispatch:
 jobs:
   build:
@@ -12,12 +12,13 @@ jobs:
       - name: Install deps
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y ffmpeg jq rclone
+          sudo apt-get install -y ffmpeg jq rclone zip xxd
           pip install python-docx gtts requests
-      - name: Parse + Speak (ElevenLabs if key; else gTTS)
+      - name: Parse + Speak (EL if key; else gTTS)
         env: { ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }} }
         run: |
           mkdir -p work public
+          python scripts/parse_docx.py
           python scripts/speak.py
       - name: Master to −18 LUFS / −2 dBTP
         run: |
@@ -29,6 +30,28 @@ jobs:
       - name: Build RSS feed
         env: { FEED_URL: ${{ vars.FEED_URL }} }
         run: python scripts/build_feed.py
+      - name: Fragments (2 teaser text clips)
+        run: |
+          mkdir -p public/fragments
+          head -n 4 source/book0_story_premise.txt > public/fragments/fragment1.txt || true
+          tail -n 4 source/book0_story_premise.txt > public/fragments/fragment2.txt || true
+      - name: Recovery Kit (zip or AES-GCM encrypted)
+        env:
+          ENC_AES_KEY: ${{ secrets.ENC_AES_KEY }}
+          ENC_AES_IV:  ${{ secrets.ENC_AES_IV }}
+        run: |
+          mkdir -p public && mkdir -p recovery
+          cp public/feed.xml recovery/ || true
+          (cd public && find audio -type f -exec sha256sum {} \;) > recovery/hashes.txt || true
+          zip -r recovery.zip recovery >/dev/null
+          if [ -n "$ENC_AES_KEY" ] && [ -n "$ENC_AES_IV" ]; then
+            KEYHEX=$(echo -n "$ENC_AES_KEY" | base64 -d | xxd -p -c256)
+            IVHEX=$(echo -n "$ENC_AES_IV"  | base64 -d | xxd -p -c256)
+            openssl enc -aes-256-gcm -pbkdf2 -iter 120000 -K "$KEYHEX" -iv "$IVHEX" -in recovery.zip -out recovery.enc
+            echo "encrypted=1" > recovery/meta.txt
+          else
+            echo "encrypted=0" > recovery/meta.txt
+          fi
       - name: Mirror to OneDrive (optional)
         if: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }}
         env: { RCLONE_CONFIG_ONEDRIVE: ${{ secrets.RCLONE_CONFIG_ONEDRIVE }} }
@@ -37,14 +60,31 @@ jobs:
           printf "%s\n" "$RCLONE_CONFIG_ONEDRIVE" > ~/.config/rclone/rclone.conf
           rclone mkdir onedrive:AI_Saga_Sphere/outputs || true
           rclone sync public onedrive:AI_Saga_Sphere/outputs
+          rclone mkdir onedrive:AI_Saga_Sphere/archives || true
+          if [ -f recovery.enc ]; then rclone copy recovery.enc onedrive:AI_Saga_Sphere/archives; else rclone copy recovery.zip onedrive:AI_Saga_Sphere/archives; fi
+          rclone copy recovery/meta.txt onedrive:AI_Saga_Sphere/archives
+      - name: Storacha publish + IPNS (optional)
+        if: ${{ secrets.STORACHA_TOKEN }}
+        env:
+          STORACHA_TOKEN:     ${{ secrets.STORACHA_TOKEN }}
+          STORACHA_SPACE:     ${{ secrets.STORACHA_SPACE }}
+          STORACHA_IPNS_NAME: ${{ secrets.STORACHA_IPNS_NAME }}
+        run: |
+          curl -sL https://get.storacha.com/cli.sh | bash
+          storacha login --token "$STORACHA_TOKEN"
+          storacha use "${STORACHA_SPACE:-AI Saga Sphere}"
+          CID=$(storacha put public | tail -n1 | tr -d '\n'); echo "$CID" > public/ipfs.txt
+          storacha publish --name "${STORACHA_IPNS_NAME:-aisagasphere-feed}" "$CID" > public/ipns.txt || true
       - uses: actions/upload-pages-artifact@v3
         with: { path: public }
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     permissions: { pages: write, id-token: write }
     steps:
       - uses: actions/deploy-pages@v4
+
   verify_recovery:
     needs: deploy
     runs-on: ubuntu-latest

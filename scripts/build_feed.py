@@ -16,7 +16,7 @@ for w in masters:
 base=os.getenv("FEED_URL","").rsplit("/",1)[0] if os.getenv("FEED_URL") else ""
 feed=['<?xml version="1.0" encoding="UTF-8"?>','<rss version="2.0">',' <channel>',
       '  <title>AI SAGA SPHERE</title>', f'  <link>{os.getenv("FEED_URL","")}</link>',
-      '  <description>Codex‑sealed, AI‑only narrated audiobook continuum.</description>']
+      '  <description>Codex-sealed, AI-only narrated audiobook continuum.</description>']
 for name,size,dur in items:
     feed+=['  <item>',f'    <title>{name}</title>',
            f'    <enclosure url="{base}/audio/{name}" type="audio/mpeg" length="{size}"/>',
