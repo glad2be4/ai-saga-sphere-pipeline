@@ -1,4 +1,4 @@
-name: AI Saga Sphere — Production (synthesize.py + Master + RSS + Pages + Mirrors + Recovery)
+name: AI Saga Sphere — Production Loop (Audio + RSS + Pages + Mirrors + Recovery)
 on:
   push: { paths: ['source/**','scripts/**','.github/workflows/**'] }
   workflow_dispatch:
@@ -14,11 +14,12 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y ffmpeg jq rclone zip xxd
           pip install python-docx gtts requests
-      - name: Parse + Narrate (Codex synthesize.py)
+      - name: Parse + Speak (EL primary; gTTS fallback)
         env: { ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }} }
         run: |
-          mkdir -p work public logs
-          python scripts/synthesize.py
+          mkdir -p work public
+          python scripts/parse_docx.py
+          python scripts/speak.py
       - name: Master to −18 LUFS / −2 dBTP
         run: |
           mkdir -p work/masters

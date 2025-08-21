@@ -3,7 +3,7 @@ from pathlib import Path
 SSML=Path("work/ssml"); TTS=Path("work/tts"); TTS.mkdir(parents=True,exist_ok=True)
 API=os.getenv("ELEVEN_API_KEY"); VOICE_ID=os.getenv("ELEVEN_VOICE_ID")
 def plain(s): return re.sub(r'<[^>]+>','',re.sub(r'<break time="(\d+)ms"/>',lambda m:' ' if int(m.group(1))<300 else '\n',s))
-def pick_voice():
+def choose_voice():
     if VOICE_ID: return VOICE_ID
     try:
         r=requests.get("https://api.elevenlabs.io/v1/voices",headers={"xi-api-key":API},timeout=30)
@@ -11,7 +11,7 @@ def pick_voice():
     except Exception: pass
     return "EXAVITQu4vr4xnSDxMaL"
 def el(text,out):
-    url=f"https://api.elevenlabs.io/v1/text-to-speech/{pick_voice()}"
+    url=f"https://api.elevenlabs.io/v1/text-to-speech/{choose_voice()}"
     hdr={"xi-api-key":API,"accept":"audio/mpeg","content-type":"application/json"}
     data={"text":text,"model_id":"eleven_multilingual_v2","voice_settings":{"stability":0.30,"similarity_boost":0.80,"use_speaker_boost":True}}
     for _ in range(5):
