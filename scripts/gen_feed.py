@@ -1,4 +1,4 @@
-import os, time, email.utils
+import os, email.utils
 from pathlib import Path
 root=Path("public"); audio=root/"audio"; audio.mkdir(parents=True,exist_ok=True)
 feed=root/"feed.xml"; base=os.getenv("FEED_URL","").rsplit("/",1)[0] if os.getenv("FEED_URL") else ""

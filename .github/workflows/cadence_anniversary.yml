@@ -1,14 +1,3 @@
 name: Cadence — Anniversary Echo
-on:
-  schedule:
-    - cron: '11 11 1 1 *'
-  workflow_dispatch:
-jobs:
-  anniversary:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          sudo apt-get update -y
-          sudo apt-get install -y jq
-      - run: CADENCE_MODE=anniversary REPO_SLUG="${{ github.repository }}" FEED_URL="${{ vars.FEED_URL }}" bash scripts/cadence.sh
+on: { schedule: [ { cron: '11 11 1 1 *' } ], workflow_dispatch: {} }
+jobs: { run: { runs-on: ubuntu-latest, steps: [ { uses: actions/checkout@v4 }, { run: sudo apt-get update -y && sudo apt-get install -y jq }, { run: CADENCE_MODE=anniversary REPO_SLUG="${{ github.repository }}" FEED_URL="${{ vars.FEED_URL }}" bash scripts/cadence.sh } ] } }
