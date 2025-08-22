@@ -1,0 +1,32 @@
+[
+  {
+    "file": "book0_premise_demo.mp3",
+    "duration_s": 8.040,
+    "bitrate_bps": 192616,
+    "loudness": {
+      "I_LUFS": null,
+      "TP_dBTP": null,
+      "LRA": null
+    }
+  },
+  {
+    "file": "book0_story_premise_raw.mp3",
+    "duration_s": 20.880,
+    "bitrate_bps": 64000,
+    "loudness": {
+      "I_LUFS": null,
+      "TP_dBTP": null,
+      "LRA": null
+    }
+  },
+  {
+    "file": "demo_20250822_121443.mp3",
+    "duration_s": 2.038,
+    "bitrate_bps": 129806,
+    "loudness": {
+      "I_LUFS": null,
+      "TP_dBTP": null,
+      "LRA": null
+    }
+  }
+]

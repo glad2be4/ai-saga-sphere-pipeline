@@ -14,7 +14,8 @@
     <id>tag:ai-saga-sphere-pipeline,20250822:book0_premise_demo.mp3</id>
     <link href="https://glad2be4.github.io/ai-saga-sphere-pipeline/audio/book0_premise_demo.mp3"/>
     <content type="text">Audio artifact book0_premise_demo.mp3</content>
-  </entry>
+    <content type="text">QC: I=+0.0 LUFS, TP=+0.0 dBTP, LRA=0.0 — file: book0_premise_demo.mp3</content>
+</entry>
   <entry>
     <title>book0_story_premise_raw.mp3</title>
     <updated>2025-08-22T19:04:08Z</updated>
