@@ -1,38 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AI Saga Sphere · Pipeline</title>
-  <subtitle>Autonomic Codex feed (spine + mirrors + pipeline + recovery)</subtitle>
-  <id>https://glad2be4.github.io/ai-saga-sphere-pipeline/</id>
-  <updated>2025-08-22T01:51:38Z</updated>
-
-  <author><name>AI Saga Sphere</name><email>ceo@glad2be.com</email></author>
-  <link rel="self" href="https://glad2be4.github.io/ai-saga-sphere-pipeline/feed.xml"/>
-  <link rel="alternate" href="https://glad2be4.github.io/ai-saga-sphere-pipeline/"/>
-
-  <!-- Codex control block -->
-  <category term="codex:channel" label="ai-saga-sphere"/>
-  <category term="codex:version" label="v1"/>
-  <category term="codex:mirrors" label="pages,ipfs,onedrive"/>
-  <category term="codex:recovery" label="enabled"/>
-
-  <!-- Entry: Book 0 · Story Premise (audio + text) -->
+  <title>AI Saga Sphere Pipeline</title>
+  <updated>2025-01-01T00:00:00Z</updated>
+  <id>tag:ai-saga-sphere,bootstrap</id>
   <entry>
-    <title>Book 0 · Story Premise</title>
-    <id>tag:ai-saga-sphere,premise,book0</id>
-    <updated>2025-08-22T01:51:38Z</updated>
-    <summary type="text">
-      Earth was not abandoned; it was entrusted. A covenant of witnesses was written…
-    </summary>
-    <link rel="alternate" href="https://glad2be4.github.io/ai-saga-sphere-pipeline/book0/premise/"/>
-    <!-- Primary audio (GitHub Pages artifact) -->
-    <link rel="enclosure"
-          href="https://glad2be4.github.io/ai-saga-sphere-pipeline/output/book0/premise/premise.mp3"
-          type="audio/mpeg" length="0"/>
-    <!-- Mirrors (declared as categories for Codex agents) -->
-    <category term="mirror:ipfs" label="ipfs:CID_TBD"/>
-    <category term="mirror:onedrive" label="AI_Saga_Sphere/outputs/book0/premise/premise.mp3"/>
-    <!-- Integrity (to be filled by pipeline) -->
-    <category term="sha256" label="TBD"/>
-    <category term="duration" label="TBD"/>
+    <title>Codex Bootstrap</title>
+    <updated>2025-01-01T00:00:00Z</updated>
+    <id>tag:ai-saga-sphere,bootstrap,entry,1</id>
+    <summary>Bootstrap placeholder; replaced by Codex pipeline builds.</summary>
   </entry>
 </feed>
