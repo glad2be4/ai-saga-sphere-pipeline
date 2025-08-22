@@ -1,0 +1,22 @@
+{
+  "ts": "20250821T233221Z",
+  "commit": "c08e62f",
+  "feed": "",
+  "files": [
+    {
+      "path": "public/feed.xml",
+      "sha256": "00fcfe02f4543f7f2aec938c2f3a568026a906b52eb732dcabf1e5c7ecc9bcd8",
+      "bytes": 642
+    },
+    {
+      "path": "public/audio/book0_story_premise_raw.mp3",
+      "sha256": "435e27724ac3cd5db3e1e4ddf24471593b45e4a9ba8659b17b683acc0247590f",
+      "bytes": 167040
+    },
+    {
+      "path": ".github/workflows/codex_publish.yml",
+      "sha256": "f4a8884625eacc1fec8a2ad7796053891e7c544b4bbb5872d1977a99231c0fa8",
+      "bytes": 5364
+    }
+  ]
+}
