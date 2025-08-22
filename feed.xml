@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>AI Saga Sphere Pipeline</title>
-  <updated>2025-08-22T13:26:10Z</updated>
+  <updated>2025-08-22T19:04:08Z</updated>
   <id>https://glad2be4.github.io/ai-saga-sphere-pipeline/feed.xml</id>
   <entry>
     <title>Codex Bootstrap</title>
     <updated>2025-08-22T13:26:10Z</updated>
     <id>tag:ai-saga-sphere,bootstrap</id>
+  </entry>
+  <entry>
+    <title>book0_premise_demo.mp3</title>
+    <updated>2025-08-22T19:04:08Z</updated>
+    <id>tag:ai-saga-sphere-pipeline,20250822:book0_premise_demo.mp3</id>
+    <link href="https://glad2be4.github.io/ai-saga-sphere-pipeline/audio/book0_premise_demo.mp3"/>
+    <content type="text">Audio artifact book0_premise_demo.mp3</content>
+  </entry>
+  <entry>
+    <title>book0_story_premise_raw.mp3</title>
+    <updated>2025-08-22T19:04:08Z</updated>
+    <id>tag:ai-saga-sphere-pipeline,20250822:book0_story_premise_raw.mp3</id>
+    <link href="https://glad2be4.github.io/ai-saga-sphere-pipeline/audio/book0_story_premise_raw.mp3"/>
+    <content type="text">Audio artifact book0_story_premise_raw.mp3</content>
+  </entry>
+  <entry>
+    <title>demo_20250822_121443.mp3</title>
+    <updated>2025-08-22T19:04:08Z</updated>
+    <id>tag:ai-saga-sphere-pipeline,20250822:demo_20250822_121443.mp3</id>
+    <link href="https://glad2be4.github.io/ai-saga-sphere-pipeline/audio/demo_20250822_121443.mp3"/>
+    <content type="text">Audio artifact demo_20250822_121443.mp3</content>
   </entry>
 </feed>
