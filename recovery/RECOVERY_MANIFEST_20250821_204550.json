@@ -1,0 +1,11 @@
+{
+  "generated_at": "20250821_204550",
+  "feed_url": "https://glad2be4.github.io/ai-saga-sphere-pipeline/feed.xml",
+  "files": [
+    {"path": "public/feed.xml"},
+    {"path": "public/audio/book0_premise_demo.mp3"}
+  ],
+  "checksums": [
+    {"path": "recovery_20250821_204550.tar", "sha256": "f6ebdb3720235334fe21e2c9d3d7949d72cdf12963e1b2509a924cc9b279b582"}
+  ]
+}

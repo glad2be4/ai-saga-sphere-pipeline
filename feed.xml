@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>AI Saga Sphere Pipeline</title>
-  <updated>2025-01-01T00:00:00Z</updated>
-  <id>tag:ai-saga-sphere,bootstrap</id>
+  <updated>2025-08-22T13:26:10Z</updated>
+  <id>https://glad2be4.github.io/ai-saga-sphere-pipeline/feed.xml</id>
   <entry>
     <title>Codex Bootstrap</title>
-    <updated>2025-01-01T00:00:00Z</updated>
-    <id>tag:ai-saga-sphere,bootstrap,entry,1</id>
-    <summary>Bootstrap placeholder; replaced by Codex pipeline builds.</summary>
+    <updated>2025-08-22T13:26:10Z</updated>
+    <id>tag:ai-saga-sphere,bootstrap</id>
   </entry>
 </feed>
