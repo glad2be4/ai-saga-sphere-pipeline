@@ -1,0 +1,14 @@
+{
+  "gh_user": "glad2be4",
+  "repo": "ai-saga-sphere-pipeline",
+  "feed_url": "https://glad2be4.github.io/ai-saga-sphere-pipeline/feed.xml",
+  "artifact": "recovery_20250822_150234.tar.gz",
+  "sha256": "4229b4217ab10dfe1d18db610700dd16c5bfc3668be1d50c3a56f7f24d94a935",
+  "generated_utc": "2025-08-22T15:02:34Z",
+  "codex": {
+    "spine": "feed.xml",
+    "mirror": "GitHub Pages",
+    "pipeline": "pages.yml",
+    "recovery": "this manifest + tarball"
+  }
+}
