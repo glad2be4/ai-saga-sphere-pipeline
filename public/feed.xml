@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>AI Saga Sphere</title>
-    <link>https://glad2be4.github.io/ai-saga-sphere-pipeline</link>
-    <description>AI Saga Sphere — autonomic Codex pipeline</description>
-    <item>
-      <title>Book 0 — Story Premise (demo)</title>
-      <description>Autonomic demo episode (normalized to Codex loudness).</description>
-      <enclosure url="https://glad2be4.github.io/ai-saga-sphere-pipeline/audio/book0_premise_demo.mp3" type="audio/mpeg" />
-      <guid>https://glad2be4.github.io/ai-saga-sphere-pipeline/audio/book0_premise_demo.mp3</guid>
-      <pubDate>Thu, 21 Aug 2025 20:45:50 -0400</pubDate>
-    </item>
-  </channel>
-</rss>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>AI Saga Sphere – Production</title>
+  <updated>2025-08-22T16:14:43Z</updated>
+  <id>tag:ai-saga-sphere-pipeline,prod</id>
+</feed>
