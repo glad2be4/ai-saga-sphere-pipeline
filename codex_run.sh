@@ -1,45 +1,45 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
-: "${GH_USER:?GH_USER required}"
-: "${REPO_NAME:=ai-saga-sphere-pipeline}"
-: "${RCLONE_TARGETS:=}"
+: "${GH_USER:?GH_USER required}"; : "${REPO_NAME:?REPO_NAME required}"
+REPO_DIR="$HOME/repo/$REPO_NAME"
+LOGDIR="$REPO_DIR/logs"
+OUTDIR="$REPO_DIR/outputs"
+RECDIR="$REPO_DIR/recovery"
+mkdir -p "$LOGDIR" "$OUTDIR" "$RECDIR"
 
-LOGDIR="outputs"; mkdir -p "$LOGDIR" "recovery"
-RUN_ID=$(date +"%Y%m%d_%H%M%S")
-LOG="$LOGDIR/codex_run_${RUN_ID}.log"
+echo "== Codex Run (Spine + Mirror + Pipeline + Recovery) =="
+run_id="$(date +%Y%m%d_%H%M%S)"
+log="$LOGDIR/codex_run_${run_id}.log"
 
-# 0) Minimal self-heal feed (so Pages has something to serve)
-if [ ! -f feed.xml ]; then
-  cat > feed.xml <<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AI Saga Sphere Pipeline</title>
-  <updated>$(date -u +"%Y-%m-%dT%H:%M:%SZ")</updated>
-  <id>https://${GH_USER}.github.io/${REPO_NAME}/feed.xml</id>
-  <entry><title>Codex Bootstrap</title><updated>$(date -u +"%Y-%m-%dT%H:%M:%SZ")</updated><id>tag:ai-saga-sphere,bootstrap</id></entry>
-</feed>
-XML
-fi
+# Refresh timestamps inside feed and copy to public/
+now_iso="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+sed -i "0,/<updated>.*<\/updated>/s##<updated>${now_iso}<\/updated>#" "$REPO_DIR/feed.xml" || true
+cp -f "$REPO_DIR/feed.xml" "$REPO_DIR/public/feed.xml"
+touch "$REPO_DIR/public/.nojekyll"
 
-# 1) Example “build” section (placeholder; extend with your real processing)
-echo "== Codex Run (Spine + Mirror + Pipeline + Recovery) ==" | tee "$LOG"
-echo "No master MP3 found — skipping teaser." | tee -a "$LOG"
+# Example QC artifact (extend as your pipeline grows)
+echo "{\"run\":\"$run_id\",\"gh_user\":\"$GH_USER\",\"repo\":\"$REPO_NAME\",\"updated\":\"$now_iso\"}" \
+  > "$OUTDIR/qc_report_${run_id}.json"
 
-# 2) Recovery kit (tar + sha256)
-TAR="outputs/recovery/recovery_$(date +%Y%m%d_%H%M%S).tar"
-mkdir -p outputs/recovery
-tar -cf "$TAR" feed.xml || true
-sha256sum "$TAR" | awk '{print $1}' > outputs/recovery/latest.sha256
+# Recovery kit
+tar_name="$RECDIR/recovery_${run_id}.tar"
+tar -cf "$tar_name" feed.xml public/feed.xml outputs || true
+sha256sum "$tar_name" | awk '{print $1}' > "$OUTDIR/latest.sha256"
 
-# 3) Optional mirrors (only if remote exists)
-if [ -n "$RCLONE_TARGETS" ]; then
-  echo "== Mirrors ==" | tee -a "$LOG"
+# Optional mirrors via rclone (only if targets exist)
+if [ -n "${RCLONE_TARGETS:-}" ]; then
+  echo "== Mirrors =="
   for tgt in $RCLONE_TARGETS; do
-    if rclone lsd "$tgt" >/dev/null 2>&1; then
-      echo "→ rclone copy outputs/ to $tgt/${REPO_NAME}/outputs/" | tee -a "$LOG"
-      rclone copy outputs/ "$tgt/${REPO_NAME}/outputs/" --fast-list --transfers=4 --checkers=8 >/dev/null 2>&1 || true
+    if rclone listremotes 2>/dev/null | sed 's/:$//' | grep -q "^${tgt%%:*}$"; then
+      echo "→ rclone copy outputs/ to $tgt/outputs/"
+      rclone copy outputs/ "$tgt/outputs/" --transfers=4 --checkers=8 --progress 2>/dev/null || true
+      echo "→ rclone copy recovery/ to $tgt/recovery/"
+      rclone copy recovery/ "$tgt/recovery/" --transfers=4 --checkers=8 --progress 2>/dev/null || true
     else
-      echo "… skipping mirror (remote missing): $tgt" | tee -a "$LOG"
+      echo "! Skip mirror: remote '$tgt' not found (use 'rclone config')."
     fi
   done
 fi
+
+echo "== Codex Run complete =="
+echo "log:$log"

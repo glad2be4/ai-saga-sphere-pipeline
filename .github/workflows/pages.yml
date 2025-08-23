@@ -1,7 +1,11 @@
 name: Deploy Pages
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+    paths:
+      - 'public/**'
+      - 'feed.xml'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -9,22 +13,29 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+concurrency: pages
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Upload public/ as artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Prepare site
+        run: |
+          mkdir -p dist
+          cp -r public/* dist/ 2>/dev/null || true
+          [ -f feed.xml ] && cp feed.xml dist/
+          touch dist/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
