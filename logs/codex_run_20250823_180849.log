@@ -1,0 +1,642 @@
+== Codex Run (Spine + Mirror + Pipeline + Recovery) ==
+== Mirrors ==
+→ rclone copy outputs/ → onedrive:AI_Saga_Sphere/outputs/
+Transferred:   	          0 B / 80 B, 0%, 0 B/s, ETA -
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 1, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                                  _nightly.err:  0% /80, 0/s, -Transferred:   	          0 B / 80 B, 0%, 0 B/s, ETA -
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 1, 0%
+Elapsed time:         1.0s
+Transferring:
+ *                                  _nightly.err:  0% /80, 0/s, -Transferred:   	          0 B / 80 B, 0%, 0 B/s, ETA -
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 1, 0%
+Elapsed time:         1.4s
+Transferring:
+ *                                  _nightly.err:  0% /80, 0/s, -Transferred:   	         80 B / 32.706 KiB, 0%, 0 B/s, ETA -
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 5, 0%
+Elapsed time:         2.0s
+Transferring:
+ *                                  _nightly.err:100% /80, 0/s, -
+ *       codex_run_2025-08-23T17:26:32-04:00.log:  0% /164, 0/s, -
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /131, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -Transferred:   	         80 B / 32.706 KiB, 0%, 39 B/s, ETA 13m55s
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 5, 0%
+Elapsed time:         2.5s
+Transferring:
+ *                                  _nightly.err:100% /80, 40/s, 0s
+ *       codex_run_2025-08-23T17:26:32-04:00.log:  0% /164, 0/s, -
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /131, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -Transferred:   	        299 B / 33.054 KiB, 1%, 39 B/s, ETA 13m58s
+Checks:                 0 / 0, -, Listed 16
+Transferred:            1 / 7, 14%
+Elapsed time:         3.0s
+Transferring:
+ *       codex_run_2025-08-23T17:26:32-04:00.log:100% /164, 163/s, 0s
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /131, 0/s, -
+ *                 codex_run_20250823_171519.log:100% /55, 54/s, 0s
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+2025/08/23 22:08:55 ERROR : codex_run_2025-08-23T18:08:49-04:00.log: Failed to copy: Put "https://netorg6712312-my.sharepoint.com/personal/ceo_glad2be_com/_api/v2.0/drives/b!fHmaXZD-4kib_ol-Cz-WL-kmtvsIcM9Ci51Y0G3ITEDud5zx_JacRJ3S0MeYmunm/items/017EDRWGOMNLGG6MJ57NDKN6K56RBK2EKH/uploadSession?guid='4d93ade2-ea95-4e91-809a-ceb57e1ccce8'&overwrite=True&rename=False&dc=0&tempauth=v1.eyJzaXRlaWQiOiI1ZDlhNzk3Yy1mZTkwLTQ4ZTItOWJmZS04OTdlMGIzZjk2MmYiLCJhcHBfZGlzcGxheW5hbWUiOiJyY2xvbmUiLCJhcHBpZCI6ImIxNTY2NWQ5LWVkYTYtNDA5Mi04NTM5LTBlZWMzNzZhZmQ1OSIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9uZXRvcmc2NzEyMzEyLW15LnNoYXJlcG9pbnQuY29tQDY2ZTczNzgwLTQ1ZmMtNDRjOC04YTIwLTBkYmY5NTdkNTQ4ZiIsImV4cCI6IjE3NTYwNzMzMzQifQ.CkAKDGVudHJhX2NsYWltcxIwQ01iMXFNVUdFQUFhRm5kVWIxaG5VRTlLU1RCSFExOXNRWEkyUm1SV1FWRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NhILCMLl9uz1prE-EAUaDTIwLjE5MC4xMzUuNDUqLGhCLys3RFNIYUlCWEQwS2RqVE41QnhlWTBKdW9aSVRTVkcvSHhxWUhnVEU9MJgCOAFCEKG-snEjoACQxiXoxv7b2fJKEGhhc2hlZHByb29mdG9rZW5qJDAwNWYzZWU5LTgzNjgtN2E0My0wY2E5LWFmMTdjMDcwMThhYXIpMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwY2IzZWQwYjZAbGl2ZS5jb216ATKCARIJgDfnZvxFyEQRiiANv5V9VI-SAQZTdGV2ZW6aAQdHbGFkbmV5ogEPY2VvQGdsYWQyYmUuY29tqgEQMTAwMzIwMDBDQjNFRDBCNrIBRW15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIG15ZmlsZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsc2l0ZXMucmVhZMgBAQ.DFWkvXspYhiz3xPQwVBJ6MqDCjeoKk-Jd-8z-V0pMW0": can't copy - source file is being updated (size changed from 848 to 1746)
+Transferred:   	        299 B / 33.054 KiB, 1%, 99 B/s, ETA 5m36s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            1 / 7, 14%
+Elapsed time:         3.2s
+Transferring:
+ *       codex_run_2025-08-23T17:26:32-04:00.log:100% /164, 163/s, 0s
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /131, 0/s, -
+ *                 codex_run_20250823_171519.log:100% /55, 54/s, 0s
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -Transferred:   	   32.578 KiB / 32.926 KiB, 99%, 99 B/s, ETA 3s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            1 / 6, 17%
+Elapsed time:         3.4s
+Transferring:
+ *       codex_run_2025-08-23T17:26:32-04:00.log:100% /164, 163/s, 0s
+ *                 codex_run_20250823_171519.log:100% /55, 54/s, 0s
+ *                      demo_20250822_121443.mp3:100% /32.286Ki, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -Transferred:   	   32.923 KiB / 93.967 KiB, 35%, 99 B/s, ETA 10m27s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            3 / 11, 27%
+Elapsed time:         4.0s
+Transferring:
+ *                      demo_20250822_121443.mp3:100% /32.286Ki, 32.269Ki/s, 0s
+ *                qc_report_20250823_012029.json:100% /353, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -Transferred:   	   32.926 KiB / 114.481 KiB, 29%, 8.230 KiB/s, ETA 9s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:            6 / 18, 33%
+Elapsed time:         4.5s
+Transferring:
+ *               qc_report_20250823T055709Z.json:100% /3, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -Transferred:   	   82.926 KiB / 114.481 KiB, 72%, 16.585 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:            7 / 18, 39%
+Elapsed time:         5.0s
+Transferring:
+ *                  recovery_20250822_161444.tar:100% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -Transferred:   	   93.027 KiB / 114.481 KiB, 81%, 16.585 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:            7 / 18, 39%
+Elapsed time:         5.5s
+Transferring:
+ *                  recovery_20250822_161444.tar:100% /50Ki, 49.993Ki/s, 0s
+ *          recovery_20250822_163259Z.tar.sha256:100% /104, 103/s, 0s
+ *                 recovery_20250822_163259Z.tar:100% /10Ki, 9.998Ki/s, 0s
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -Transferred:   	   93.967 KiB / 114.481 KiB, 82%, 16.585 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           10 / 18, 56%
+Elapsed time:         6.0s
+Transferring:
+ *               recovery_20250823_012029.tar.gz:100% /962, 961/s, 0s
+ *       recovery_20250823_012029/git_commit.txt:  0% /41, 0/s, -
+ * recovery_20250823_0120…T_20250823_012029.json:  0% /204, 0/s, -
+ *           recovery_20250823_012029/sha256.txt:  0% /75, 0/s, -Transferred:   	   94.206 KiB / 114.481 KiB, 82%, 15.660 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           11 / 18, 61%
+Elapsed time:         6.5s
+Transferring:
+ *       recovery_20250823_012029/git_commit.txt:100% /41, 0/s, -
+ * recovery_20250823_0120…T_20250823_012029.json:100% /204, 0/s, -
+ *           recovery_20250823_012029/sha256.txt:  0% /75, 0/s, -
+ *                        recovery/latest.sha256:  0% /95, 0/s, -Transferred:   	   94.279 KiB / 114.481 KiB, 82%, 13.468 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           11 / 18, 61%
+Elapsed time:         7.0s
+Transferring:
+ *       recovery_20250823_012029/git_commit.txt:100% /41, 40/s, 0s
+ * recovery_20250823_0120…T_20250823_012029.json:100% /204, 203/s, 0s
+ *           recovery_20250823_012029/sha256.txt:100% /75, 74/s, 0s
+ *                        recovery/latest.sha256:  0% /95, 0/s, -Transferred:   	   94.372 KiB / 114.481 KiB, 82%, 13.468 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           14 / 18, 78%
+Elapsed time:         7.5s
+Transferring:
+ *                        recovery/latest.sha256:100% /95, 94/s, 0s
+ *         recovery/recovery_20250823_171520.tar:  0% /10Ki, 0/s, -
+ *  recovery/recovery_20250823_180849.tar.sha256:  0% /112, 0/s, -
+ *         recovery/recovery_20250823_180849.tar:  0% /10Ki, 0/s, -Transferred:   	  114.481 KiB / 114.481 KiB, 100%, 13.468 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           15 / 18, 83%
+Elapsed time:         8.0s
+Transferring:
+ *         recovery/recovery_20250823_171520.tar:100% /10Ki, 0/s, -
+ *  recovery/recovery_20250823_180849.tar.sha256:100% /112, 0/s, -
+ *         recovery/recovery_20250823_180849.tar:100% /10Ki, 0/s, -Transferred:   	  114.481 KiB / 114.481 KiB, 100%, 14.310 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           15 / 18, 83%
+Elapsed time:         8.5s
+Transferring:
+ *         recovery/recovery_20250823_171520.tar:100% /10Ki, 9.998Ki/s, 0s
+ *  recovery/recovery_20250823_180849.tar.sha256:100% /112, 111/s, 0s
+ *         recovery/recovery_20250823_180849.tar:100% /10Ki, 9.999Ki/s, 0s
+2025/08/23 22:09:00 ERROR : Attempt 1/3 failed with 1 errors and: Put "https://netorg6712312-my.sharepoint.com/personal/ceo_glad2be_com/_api/v2.0/drives/b!fHmaXZD-4kib_ol-Cz-WL-kmtvsIcM9Ci51Y0G3ITEDud5zx_JacRJ3S0MeYmunm/items/017EDRWGOMNLGG6MJ57NDKN6K56RBK2EKH/uploadSession?guid='4d93ade2-ea95-4e91-809a-ceb57e1ccce8'&overwrite=True&rename=False&dc=0&tempauth=v1.eyJzaXRlaWQiOiI1ZDlhNzk3Yy1mZTkwLTQ4ZTItOWJmZS04OTdlMGIzZjk2MmYiLCJhcHBfZGlzcGxheW5hbWUiOiJyY2xvbmUiLCJhcHBpZCI6ImIxNTY2NWQ5LWVkYTYtNDA5Mi04NTM5LTBlZWMzNzZhZmQ1OSIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9uZXRvcmc2NzEyMzEyLW15LnNoYXJlcG9pbnQuY29tQDY2ZTczNzgwLTQ1ZmMtNDRjOC04YTIwLTBkYmY5NTdkNTQ4ZiIsImV4cCI6IjE3NTYwNzMzMzQifQ.CkAKDGVudHJhX2NsYWltcxIwQ01iMXFNVUdFQUFhRm5kVWIxaG5VRTlLU1RCSFExOXNRWEkyUm1SV1FWRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NhILCMLl9uz1prE-EAUaDTIwLjE5MC4xMzUuNDUqLGhCLys3RFNIYUlCWEQwS2RqVE41QnhlWTBKdW9aSVRTVkcvSHhxWUhnVEU9MJgCOAFCEKG-snEjoACQxiXoxv7b2fJKEGhhc2hlZHByb29mdG9rZW5qJDAwNWYzZWU5LTgzNjgtN2E0My0wY2E5LWFmMTdjMDcwMThhYXIpMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwY2IzZWQwYjZAbGl2ZS5jb216ATKCARIJgDfnZvxFyEQRiiANv5V9VI-SAQZTdGV2ZW6aAQdHbGFkbmV5ogEPY2VvQGdsYWQyYmUuY29tqgEQMTAwMzIwMDBDQjNFRDBCNrIBRW15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIG15ZmlsZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsc2l0ZXMucmVhZMgBAQ.DFWkvXspYhiz3xPQwVBJ6MqDCjeoKk-Jd-8z-V0pMW0": can't copy - source file is being updated (size changed from 848 to 1746)
+Transferred:   	  114.481 KiB / 114.481 KiB, 100%, 14.310 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                 0 / 0, -, Listed 23
+Transferred:           18 / 18, 100%
+Elapsed time:         8.6sTransferred:   	  114.481 KiB / 125.601 KiB, 91%, 14.310 KiB/s, ETA 0s
+Checks:                11 / 11, 100%, Listed 61
+Transferred:           18 / 19, 95%
+Elapsed time:         9.0s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /11.119Ki, 0/s, -Transferred:   	  114.481 KiB / 125.601 KiB, 91%, 14.310 KiB/s, ETA 0s
+Checks:                18 / 18, 100%, Listed 68
+Transferred:           18 / 19, 95%
+Elapsed time:         9.5s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /11.119Ki, 0/s, -
+2025/08/23 22:09:01 ERROR : codex_run_2025-08-23T18:08:49-04:00.log: Failed to copy: Put "https://netorg6712312-my.sharepoint.com/personal/ceo_glad2be_com/_api/v2.0/drives/b!fHmaXZD-4kib_ol-Cz-WL-kmtvsIcM9Ci51Y0G3ITEDud5zx_JacRJ3S0MeYmunm/items/017EDRWGN4KS6KWGJA75BYIO4IXX2YNNP6/uploadSession?guid='3e2a5103-56d7-4491-815b-fde15782147f'&overwrite=True&rename=False&dc=0&tempauth=v1.eyJzaXRlaWQiOiI1ZDlhNzk3Yy1mZTkwLTQ4ZTItOWJmZS04OTdlMGIzZjk2MmYiLCJhcHBfZGlzcGxheW5hbWUiOiJyY2xvbmUiLCJhcHBpZCI6ImIxNTY2NWQ5LWVkYTYtNDA5Mi04NTM5LTBlZWMzNzZhZmQ1OSIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9uZXRvcmc2NzEyMzEyLW15LnNoYXJlcG9pbnQuY29tQDY2ZTczNzgwLTQ1ZmMtNDRjOC04YTIwLTBkYmY5NTdkNTQ4ZiIsImV4cCI6IjE3NTYwNzMzNDEifQ.CkAKDGVudHJhX2NsYWltcxIwQ01iMXFNVUdFQUFhRm5kVWIxaG5VRTlLU1RCSFExOXNRWEkyUm1SV1FWRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NhILCJL4pqz2prE-EAUaDTIwLjE5MC4xMzUuNDUqLFZXS2E3clpDYVk1cmJQTEJ2SS8vSktTVG5MSFJROUNpalJhVVhCOXNQWW89MJgCOAFCEKG-snLMwACQ4XqfrJysdhRKEGhhc2hlZHByb29mdG9rZW5qJDAwNWYzZWU5LTgzNjgtN2E0My0wY2E5LWFmMTdjMDcwMThhYXIpMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwY2IzZWQwYjZAbGl2ZS5jb216ATKCARIJgDfnZvxFyEQRiiANv5V9VI-SAQZTdGV2ZW6aAQdHbGFkbmV5ogEPY2VvQGdsYWQyYmUuY29tqgEQMTAwMzIwMDBDQjNFRDBCNrIBRW15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIG15ZmlsZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsc2l0ZXMucmVhZMgBAQ.g6cDMhGg2DqE43APUs029S_mu2EE5gyu8KG2KDjfWV0": can't copy - source file is being updated (size changed from 11386 to 11653)
+Transferred:   	  114.481 KiB / 125.601 KiB, 91%, 14.310 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                18 / 18, 100%, Listed 68
+Transferred:           18 / 19, 95%
+Elapsed time:         9.7s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /11.119Ki, 0/s, -
+2025/08/23 22:09:01 ERROR : Attempt 2/3 failed with 1 errors and: Put "https://netorg6712312-my.sharepoint.com/personal/ceo_glad2be_com/_api/v2.0/drives/b!fHmaXZD-4kib_ol-Cz-WL-kmtvsIcM9Ci51Y0G3ITEDud5zx_JacRJ3S0MeYmunm/items/017EDRWGN4KS6KWGJA75BYIO4IXX2YNNP6/uploadSession?guid='3e2a5103-56d7-4491-815b-fde15782147f'&overwrite=True&rename=False&dc=0&tempauth=v1.eyJzaXRlaWQiOiI1ZDlhNzk3Yy1mZTkwLTQ4ZTItOWJmZS04OTdlMGIzZjk2MmYiLCJhcHBfZGlzcGxheW5hbWUiOiJyY2xvbmUiLCJhcHBpZCI6ImIxNTY2NWQ5LWVkYTYtNDA5Mi04NTM5LTBlZWMzNzZhZmQ1OSIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9uZXRvcmc2NzEyMzEyLW15LnNoYXJlcG9pbnQuY29tQDY2ZTczNzgwLTQ1ZmMtNDRjOC04YTIwLTBkYmY5NTdkNTQ4ZiIsImV4cCI6IjE3NTYwNzMzNDEifQ.CkAKDGVudHJhX2NsYWltcxIwQ01iMXFNVUdFQUFhRm5kVWIxaG5VRTlLU1RCSFExOXNRWEkyUm1SV1FWRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NhILCJL4pqz2prE-EAUaDTIwLjE5MC4xMzUuNDUqLFZXS2E3clpDYVk1cmJQTEJ2SS8vSktTVG5MSFJROUNpalJhVVhCOXNQWW89MJgCOAFCEKG-snLMwACQ4XqfrJysdhRKEGhhc2hlZHByb29mdG9rZW5qJDAwNWYzZWU5LTgzNjgtN2E0My0wY2E5LWFmMTdjMDcwMThhYXIpMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwY2IzZWQwYjZAbGl2ZS5jb216ATKCARIJgDfnZvxFyEQRiiANv5V9VI-SAQZTdGV2ZW6aAQdHbGFkbmV5ogEPY2VvQGdsYWQyYmUuY29tqgEQMTAwMzIwMDBDQjNFRDBCNrIBRW15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIG15ZmlsZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsc2l0ZXMucmVhZMgBAQ.g6cDMhGg2DqE43APUs029S_mu2EE5gyu8KG2KDjfWV0": can't copy - source file is being updated (size changed from 11386 to 11653)
+Transferred:   	  114.481 KiB / 114.481 KiB, 100%, 14.310 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                18 / 18, 100%, Listed 68
+Transferred:           18 / 18, 100%
+Elapsed time:         9.7sTransferred:   	  114.481 KiB / 129.549 KiB, 88%, 14.310 KiB/s, ETA 1s
+Checks:                29 / 29, 100%, Listed 106
+Transferred:           18 / 19, 95%
+Elapsed time:        10.0s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /15.067Ki, 0/s, -Transferred:   	  114.481 KiB / 129.549 KiB, 88%, 14.310 KiB/s, ETA 1s
+Checks:                36 / 36, 100%, Listed 113
+Transferred:           18 / 19, 95%
+Elapsed time:        10.5s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /15.067Ki, 0/s, -
+2025/08/23 22:09:02 ERROR : codex_run_2025-08-23T18:08:49-04:00.log: Failed to copy: Put "https://netorg6712312-my.sharepoint.com/personal/ceo_glad2be_com/_api/v2.0/drives/b!fHmaXZD-4kib_ol-Cz-WL-kmtvsIcM9Ci51Y0G3ITEDud5zx_JacRJ3S0MeYmunm/items/017EDRWGLWH2W634SDHNAL3FO5PYDKVDMH/uploadSession?guid='3569dcb1-ba4c-4154-8334-192bbeeb5441'&overwrite=True&rename=False&dc=0&tempauth=v1.eyJzaXRlaWQiOiI1ZDlhNzk3Yy1mZTkwLTQ4ZTItOWJmZS04OTdlMGIzZjk2MmYiLCJhcHBfZGlzcGxheW5hbWUiOiJyY2xvbmUiLCJhcHBpZCI6ImIxNTY2NWQ5LWVkYTYtNDA5Mi04NTM5LTBlZWMzNzZhZmQ1OSIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9uZXRvcmc2NzEyMzEyLW15LnNoYXJlcG9pbnQuY29tQDY2ZTczNzgwLTQ1ZmMtNDRjOC04YTIwLTBkYmY5NTdkNTQ4ZiIsImV4cCI6IjE3NTYwNzMzNDIifQ.CkAKDGVudHJhX2NsYWltcxIwQ01iMXFNVUdFQUFhRm5kVWIxaG5VRTlLU1RCSFExOXNRWEkyUm1SV1FWRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NhILCMi2wrb2prE-EAUaDTIwLjE5MC4xMzUuNDUqLHJyTVphcVNZcFpJQnNyTGZTZjE4ZzJIaUtiZGJPN2dKQ2V4d3N2Sjc4NDQ9MJgCOAFCEKG-snMI0ACQ3bkdhJ2mv7VKEGhhc2hlZHByb29mdG9rZW5qJDAwNWYzZWU5LTgzNjgtN2E0My0wY2E5LWFmMTdjMDcwMThhYXIpMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwY2IzZWQwYjZAbGl2ZS5jb216ATKCARIJgDfnZvxFyEQRiiANv5V9VI-SAQZTdGV2ZW6aAQdHbGFkbmV5ogEPY2VvQGdsYWQyYmUuY29tqgEQMTAwMzIwMDBDQjNFRDBCNrIBRW15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIG15ZmlsZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsc2l0ZXMucmVhZMgBAQ.gOf3aXybRgVgz04Dl_wVpyuczQGRr-Om0-2qeXBKk6E": can't copy - source file is being updated (size changed from 15429 to 15965)
+Transferred:   	  114.481 KiB / 129.549 KiB, 88%, 14.310 KiB/s, ETA 1s
+Errors:                 1 (retrying may help)
+Checks:                36 / 36, 100%, Listed 113
+Transferred:           18 / 19, 95%
+Elapsed time:        10.8s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /15.067Ki, 0/s, -
+2025/08/23 22:09:02 ERROR : Attempt 3/3 failed with 1 errors and: Put "https://netorg6712312-my.sharepoint.com/personal/ceo_glad2be_com/_api/v2.0/drives/b!fHmaXZD-4kib_ol-Cz-WL-kmtvsIcM9Ci51Y0G3ITEDud5zx_JacRJ3S0MeYmunm/items/017EDRWGLWH2W634SDHNAL3FO5PYDKVDMH/uploadSession?guid='3569dcb1-ba4c-4154-8334-192bbeeb5441'&overwrite=True&rename=False&dc=0&tempauth=v1.eyJzaXRlaWQiOiI1ZDlhNzk3Yy1mZTkwLTQ4ZTItOWJmZS04OTdlMGIzZjk2MmYiLCJhcHBfZGlzcGxheW5hbWUiOiJyY2xvbmUiLCJhcHBpZCI6ImIxNTY2NWQ5LWVkYTYtNDA5Mi04NTM5LTBlZWMzNzZhZmQ1OSIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9uZXRvcmc2NzEyMzEyLW15LnNoYXJlcG9pbnQuY29tQDY2ZTczNzgwLTQ1ZmMtNDRjOC04YTIwLTBkYmY5NTdkNTQ4ZiIsImV4cCI6IjE3NTYwNzMzNDIifQ.CkAKDGVudHJhX2NsYWltcxIwQ01iMXFNVUdFQUFhRm5kVWIxaG5VRTlLU1RCSFExOXNRWEkyUm1SV1FWRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NhILCMi2wrb2prE-EAUaDTIwLjE5MC4xMzUuNDUqLHJyTVphcVNZcFpJQnNyTGZTZjE4ZzJIaUtiZGJPN2dKQ2V4d3N2Sjc4NDQ9MJgCOAFCEKG-snMI0ACQ3bkdhJ2mv7VKEGhhc2hlZHByb29mdG9rZW5qJDAwNWYzZWU5LTgzNjgtN2E0My0wY2E5LWFmMTdjMDcwMThhYXIpMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwY2IzZWQwYjZAbGl2ZS5jb216ATKCARIJgDfnZvxFyEQRiiANv5V9VI-SAQZTdGV2ZW6aAQdHbGFkbmV5ogEPY2VvQGdsYWQyYmUuY29tqgEQMTAwMzIwMDBDQjNFRDBCNrIBRW15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIG15ZmlsZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsc2l0ZXMucmVhZMgBAQ.gOf3aXybRgVgz04Dl_wVpyuczQGRr-Om0-2qeXBKk6E": can't copy - source file is being updated (size changed from 15429 to 15965)
+Transferred:   	  114.481 KiB / 114.481 KiB, 100%, 14.310 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                36 / 36, 100%, Listed 113
+Transferred:           18 / 18, 100%
+Elapsed time:        10.8sTransferred:   	  114.481 KiB / 114.481 KiB, 100%, 14.310 KiB/s, ETA 0s
+Errors:                 1 (retrying may help)
+Checks:                36 / 36, 100%, Listed 113
+Transferred:           18 / 18, 100%
+Elapsed time:        10.8s
+→ rclone copy outputs/ → ipfs:ai-saga-sphere/outputs/
+
+2025/08/23 22:09:03 ERROR : _nightly.err: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 51.720 KiB, 0%, 0 B/s, ETA -
+Errors:                 2 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 5, 0%
+Elapsed time:         0.0s
+Transferring:
+ *                                  _nightly.err:  0% /80, 0/s, -
+ *       codex_run_2025-08-23T17:26:32-04:00.log:  0% /164, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_2025-08-23T17:26:32-04:00.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 52.149 KiB, 0%, 0 B/s, ETA -
+Errors:                 4 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 6, 0%
+Elapsed time:         0.0s
+Transferring:
+ *       codex_run_2025-08-23T17:26:32-04:00.log:  0% /164, 0/s, -
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /19.302Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : demo_20250822_121443.mp3: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 51.989 KiB, 0%, 0 B/s, ETA -
+Errors:                 5 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 5, 0%
+Elapsed time:         0.1s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /19.302Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_2025-08-23T18:08:49-04:00.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 19.703 KiB, 0%, 0 B/s, ETA -
+Errors:                 6 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 4, 0%
+Elapsed time:         0.1s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /19.302Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_20250823_171519.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.442 KiB, 0%, 0 B/s, ETA -
+Errors:                 8 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 8, 0%
+Elapsed time:         0.1s
+Transferring:
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+2025/08/23 22:09:03 ERROR : qc_report_20250823_012029.json: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.389 KiB, 0%, 0 B/s, ETA -
+Errors:                10 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 7, 0%
+Elapsed time:         0.1s
+Transferring:
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : qc_report_20250823T055709Z.json: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.044 KiB, 0%, 0 B/s, ETA -
+Errors:                10 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 6, 0%
+Elapsed time:         0.1s
+Transferring:
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+2025/08/23 22:09:03 ERROR : webdav root 'ai-saga-sphere/outputs': error reading destination root directory: couldn't list files: Propfind "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                12 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 5, 0%
+Elapsed time:         0.1s
+Transferring:
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_161444.tar.sha256: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                13 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 5, 0%
+Elapsed time:         0.1s
+Transferring:
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_163259Z.tar.sha256: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                15 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 4, 0%
+Elapsed time:         0.1s
+Transferring:
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_161444.tar: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 60.939 KiB, 0%, 0 B/s, ETA -
+Errors:                15 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 3, 0%
+Elapsed time:         0.1s
+Transferring:
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_163259Z.tar: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 10.939 KiB, 0%, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 2, 0%
+Elapsed time:         0.2s
+Transferring:
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250823_012029.tar.gz: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 962 B, 0%, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Transferred:            0 / 1, 0%
+Elapsed time:         0.2s
+Transferring:
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : Attempt 1/3 failed with 17 errors and: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 0 B, -, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 16
+Elapsed time:         0.2s
+2025/08/23 22:09:03 ERROR : _nightly.err: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 60.272 KiB, 0%, 0 B/s, ETA -
+Errors:                 2 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 5, 0%
+Elapsed time:         0.2s
+Transferring:
+ *                                  _nightly.err:  0% /80, 0/s, -
+ *       codex_run_2025-08-23T17:26:32-04:00.log: transferring
+2025/08/23 22:09:03 ERROR : codex_run_2025-08-23T17:26:32-04:00.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 60.702 KiB, 0%, 0 B/s, ETA -
+Errors:                 4 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 6, 0%
+Elapsed time:         0.2s
+Transferring:
+ *       codex_run_2025-08-23T17:26:32-04:00.log:  0% /164, 0/s, -
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /27.854Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : demo_20250822_121443.mp3: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 60.542 KiB, 0%, 0 B/s, ETA -
+Errors:                 5 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 5, 0%
+Elapsed time:         0.2s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /27.854Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_20250823_171519.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 27.911 KiB, 0%, 0 B/s, ETA -
+Errors:                 6 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 4, 0%
+Elapsed time:         0.3s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /27.854Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_2025-08-23T18:08:49-04:00.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 89.243 KiB, 0%, 0 B/s, ETA -
+Errors:                 8 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 8, 0%
+Elapsed time:         0.3s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /27.854Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+2025/08/23 22:09:03 ERROR : qc_report_20250823_012029.json: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.389 KiB, 0%, 0 B/s, ETA -
+Errors:                10 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 7, 0%
+Elapsed time:         0.3s
+Transferring:
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : qc_report_20250823T055709Z.json: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 60.942 KiB, 0%, 0 B/s, ETA -
+Errors:                10 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 6, 0%
+Elapsed time:         0.3s
+Transferring:
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256: transferring
+2025/08/23 22:09:03 ERROR : webdav root 'ai-saga-sphere/outputs': error reading destination root directory: couldn't list files: Propfind "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                12 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 5, 0%
+Elapsed time:         0.3s
+Transferring:
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_161444.tar.sha256: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                13 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 5, 0%
+Elapsed time:         0.3s
+Transferring:
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_163259Z.tar: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                14 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 4, 0%
+Elapsed time:         0.3s
+Transferring:
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_161444.tar: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 51.041 KiB, 0%, 0 B/s, ETA -
+Errors:                15 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 3, 0%
+Elapsed time:         0.3s
+Transferring:
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_163259Z.tar.sha256: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 1.041 KiB, 0%, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 2, 0%
+Elapsed time:         0.3s
+Transferring:
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250823_012029.tar.gz: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 962 B, 0%, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Transferred:            0 / 1, 0%
+Elapsed time:         0.4s
+Transferring:
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : Attempt 2/3 failed with 17 errors and: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 0 B, -, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 32
+Elapsed time:         0.4s
+2025/08/23 22:09:03 ERROR : _nightly.err: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 69.721 KiB, 0%, 0 B/s, ETA -
+Errors:                 2 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 5, 0%
+Elapsed time:         0.4s
+Transferring:
+ *                                  _nightly.err:  0% /80, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_2025-08-23T17:26:32-04:00.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 69.990 KiB, 0%, 0 B/s, ETA -
+Errors:                 4 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 6, 0%
+Elapsed time:         0.4s
+Transferring:
+ *       codex_run_2025-08-23T17:26:32-04:00.log:  0% /164, 0/s, -
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /37.143Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_20250823_171519.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 69.830 KiB, 0%, 0 B/s, ETA -
+Errors:                 5 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 5, 0%
+Elapsed time:         0.4s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /37.143Ki, 0/s, -
+ *                 codex_run_20250823_171519.log:  0% /55, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+2025/08/23 22:09:03 ERROR : codex_run_2025-08-23T18:08:49-04:00.log: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 69.432 KiB, 0%, 0 B/s, ETA -
+Errors:                 6 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 4, 0%
+Elapsed time:         0.4s
+Transferring:
+ *       codex_run_2025-08-23T18:08:49-04:00.log:  0% /37.143Ki, 0/s, -
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json: transferringTransferred:   	          0 B / 32.634 KiB, 0%, 0 B/s, ETA -
+Errors:                 6 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 3, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+2025/08/23 22:09:03 ERROR : demo_20250822_121443.mp3: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 93.675 KiB, 0%, 0 B/s, ETA -
+Errors:                 8 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 8, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                      demo_20250822_121443.mp3:  0% /32.286Ki, 0/s, -
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+2025/08/23 22:09:03 ERROR : qc_report_20250823T055709Z.json: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.389 KiB, 0%, 0 B/s, ETA -
+Errors:                10 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 7, 0%
+Elapsed time:         0.5s
+Transferring:
+ *               qc_report_20250823T055709Z.json:  0% /3, 0/s, -
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : qc_report_20250823_012029.json: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.386 KiB, 0%, 0 B/s, ETA -
+Errors:                10 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 6, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                qc_report_20250823_012029.json:  0% /353, 0/s, -
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+2025/08/23 22:09:03 ERROR : webdav root 'ai-saga-sphere/outputs': error reading destination root directory: couldn't list files: Propfind "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                12 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 5, 0%
+Elapsed time:         0.5s
+Transferring:
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_161444.tar.sha256: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                13 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 5, 0%
+Elapsed time:         0.5s
+Transferring:
+ *           recovery_20250822_161444.tar.sha256:  0% /0, 0/s, -
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_163259Z.tar.sha256: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 61.041 KiB, 0%, 0 B/s, ETA -
+Errors:                15 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 4, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *          recovery_20250822_163259Z.tar.sha256:  0% /104, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_161444.tar: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 60.939 KiB, 0%, 0 B/s, ETA -
+Errors:                15 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 3, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                  recovery_20250822_161444.tar:  0% /50Ki, 0/s, -
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250823_012029.tar.gz: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 10.939 KiB, 0%, 0 B/s, ETA -
+Errors:                16 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 2, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+ *               recovery_20250823_012029.tar.gz:  0% /962, 0/s, -
+2025/08/23 22:09:03 ERROR : recovery_20250822_163259Z.tar: Failed to copy: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 10 KiB, 0%, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Transferred:            0 / 1, 0%
+Elapsed time:         0.5s
+Transferring:
+ *                 recovery_20250822_163259Z.tar:  0% /10Ki, 0/s, -
+2025/08/23 22:09:03 ERROR : Attempt 3/3 failed with 17 errors and: Update mkParentDir failed: Mkcol "https://YOUR-IPFS-GATEWAY/webdav/ai-saga-sphere/outputs/": dial tcp: lookup YOUR-IPFS-GATEWAY: no such host
+Transferred:   	          0 B / 0 B, -, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Elapsed time:         0.5sTransferred:   	          0 B / 0 B, -, 0 B/s, ETA -
+Errors:                17 (retrying may help)
+Checks:                 0 / 0, -, Listed 48
+Elapsed time:         0.5s
+== Done ==

@@ -1,45 +1,35 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
-: "${GH_USER:?GH_USER required}"; : "${REPO_NAME:?REPO_NAME required}"
-REPO_DIR="$HOME/repo/$REPO_NAME"
-LOGDIR="$REPO_DIR/logs"
-OUTDIR="$REPO_DIR/outputs"
-RECDIR="$REPO_DIR/recovery"
-mkdir -p "$LOGDIR" "$OUTDIR" "$RECDIR"
+GH_USER="${GH_USER:?GH_USER required}"
+REPO_NAME="${REPO_NAME:-ai-saga-sphere-pipeline}"
+REPO_DIR="${REPO_DIR:-$HOME/repo/$REPO_NAME}"
+FEED_URL="https://$GH_USER.github.io/$REPO_NAME/feed.xml"
+
+mkdir -p logs outputs recovery
+run_id=$(date -u +"%Y%m%d_%H%M%S")
+LOG="logs/codex_run_${run_id}.log"
+exec > >(tee -a "$LOG") 2>&1
 
 echo "== Codex Run (Spine + Mirror + Pipeline + Recovery) =="
-run_id="$(date +%Y%m%d_%H%M%S)"
-log="$LOGDIR/codex_run_${run_id}.log"
 
-# Refresh timestamps inside feed and copy to public/
-now_iso="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-sed -i "0,/<updated>.*<\/updated>/s##<updated>${now_iso}<\/updated>#" "$REPO_DIR/feed.xml" || true
-cp -f "$REPO_DIR/feed.xml" "$REPO_DIR/public/feed.xml"
-touch "$REPO_DIR/public/.nojekyll"
+# Refresh <updated> in feed.xml (keep perl in deps to avoid sed-XML pitfalls)
+if [ -f feed.xml ]; then
+  perl -0777 -pe 's|<updated>.*?</updated>|"<updated>".`date -u +\"%Y-%m-%dT%H:%M:%SZ\"`."</updated>"|e' -i feed.xml
+fi
 
-# Example QC artifact (extend as your pipeline grows)
-echo "{\"run\":\"$run_id\",\"gh_user\":\"$GH_USER\",\"repo\":\"$REPO_NAME\",\"updated\":\"$now_iso\"}" \
-  > "$OUTDIR/qc_report_${run_id}.json"
+# Recovery bundle (tiny but proves recoverability)
+tar -cf "outputs/recovery_${run_id}.tar" feed.xml index.html .nojekyll 2>/dev/null || true
+sha256sum "outputs/recovery_${run_id}.tar" | awk '{print $1}' > outputs/latest.sha256
 
-# Recovery kit
-tar_name="$RECDIR/recovery_${run_id}.tar"
-tar -cf "$tar_name" feed.xml public/feed.xml outputs || true
-sha256sum "$tar_name" | awk '{print $1}' > "$OUTDIR/latest.sha256"
-
-# Optional mirrors via rclone (only if targets exist)
+# Optional mirrors via rclone (only if remote names exist)
 if [ -n "${RCLONE_TARGETS:-}" ]; then
-  echo "== Mirrors =="
   for tgt in $RCLONE_TARGETS; do
-    if rclone listremotes 2>/dev/null | sed 's/:$//' | grep -q "^${tgt%%:*}$"; then
-      echo "→ rclone copy outputs/ to $tgt/outputs/"
-      rclone copy outputs/ "$tgt/outputs/" --transfers=4 --checkers=8 --progress 2>/dev/null || true
-      echo "→ rclone copy recovery/ to $tgt/recovery/"
-      rclone copy recovery/ "$tgt/recovery/" --transfers=4 --checkers=8 --progress 2>/dev/null || true
+    base="${tgt%%:*}"
+    if rclone lsd "${base}:" >/dev/null 2>&1; then
+      echo "→ rclone copy outputs/ → $tgt/outputs/"
+      rclone copy outputs "$tgt/outputs" --progress --transfers=4 --checkers=8 || true
     else
-      echo "! Skip mirror: remote '$tgt' not found (use 'rclone config')."
+      echo "⚠︎ rclone remote '$base' not configured; skipping."
     fi
   done
 fi
-
-echo "== Codex Run complete =="
-echo "log:$log"
