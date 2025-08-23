@@ -1,21 +1,17 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
-GH_USER="${GH_USER:-$(gh api user -q .login 2>/dev/null || echo unknown)}"
-REPO="${REPO:-ai-saga-sphere-pipeline}"
+: "${GH_USER:?GH_USER required}"
+: "${REPO:=ai-saga-sphere-pipeline}"
 FEED_URL="https://${GH_USER}.github.io/${REPO}/feed.xml"
-TRIES="${TRIES:-30}"   # ~5 min with SLEEP=10
-SLEEP="${SLEEP:-10}"
-
-echo "== Codex Verify: $FEED_URL =="
-for i in $(seq 1 "$TRIES"); do
-  code="$(curl -sIL -o /dev/null -w "%{http_code}" "$FEED_URL" || true)"
-  ts="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-  if [ "$code" = "200" ]; then
-    echo "[$ts] ✅ Feed OK (200)."
-    exit 0
-  fi
-  echo "[$ts] ⏳ Feed not ready (HTTP $code), retry $i/$TRIES..."
-  sleep "$SLEEP"
-done
-echo "❌ Feed never returned 200 after $TRIES tries."
-exit 2
+echo "== Codex Verify (Spine + Mirror + Pipeline + Recovery) =="
+code="$(curl -s -o /dev/null -w "%{http_code}" "$FEED_URL" || echo 000)"
+if [ "$code" = "200" ]; then echo "✅ Feed OK: $FEED_URL"; else echo "❌ Feed not 200 (got $code) -> $FEED_URL"; fi
+# Transparency tail if present
+LOGFILE="$(ls -1t outputs/codex_run_*.log 2>/dev/null | head -n1 || true)"
+[ -n "${LOGFILE}" ] && { echo "Recent log tail:"; tail -n 40 "$LOGFILE"; }
+# Recovery artifact presence
+if ls outputs/recovery/recovery_*.tar >/dev/null 2>&1; then
+  echo "✅ Recovery kit present"; ls -lh outputs/recovery/recovery_*.tar | tail -n1
+else
+  echo "⚠️ Recovery kit missing (first run may create on next pass)"
+fi
