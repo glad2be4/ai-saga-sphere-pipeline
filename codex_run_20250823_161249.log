@@ -1,0 +1,4 @@
+[2025-08-23T16:12:49-0400] == Codex Run (Spine + Mirrors + Pipeline + Recovery) ==
+[2025-08-23T16:12:49-0400] No master MP3 found — skipping teaser.
+[2025-08-23T16:12:49-0400] Building recovery kit
+./codex_run.sh: line 27: RECI_DIR_DISABLED: unbound variable
