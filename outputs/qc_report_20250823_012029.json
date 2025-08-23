@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2025-08-23T01:20:29Z",
+  "repo": "glad2be4/ai-saga-sphere-pipeline",
+  "branch": "main",
+  "git_head": "fcce9e5",
+  "feed_url": "https://glad2be4.github.io/ai-saga-sphere-pipeline/feed.xml",
+  "feed_http_code": "200",
+  "artifacts": {
+    "feed_xml": "feed.xml",
+    "recovery_tar": "outputs/recovery_20250823_012029.tar.gz"
+  }
+}
