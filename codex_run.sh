@@ -1,5 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
 
 # Vars & dirs
 REPO_NAME="${REPO_NAME:-ai-saga-sphere-pipeline}"

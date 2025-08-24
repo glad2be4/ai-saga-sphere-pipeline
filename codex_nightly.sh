@@ -1,5 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
 : "${GH_USER:?GH_USER required}"
 : "${REPO_NAME:=ai-saga-sphere-pipeline}"
 cd "$HOME/repo/$REPO_NAME"

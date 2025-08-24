@@ -1,11 +1,8 @@
-name: Deploy Pages
+name: Codex Publish
+
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'public/**'
-      - 'feed.xml'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -13,29 +10,36 @@ permissions:
   pages: write
   id-token: write
 
-concurrency: pages
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Prepare site
+
+      # Ensure a nojekyll + minimal index so Pages will build
+      - name: Bootstrap public files
         run: |
-          mkdir -p dist
-          cp -r public/* dist/ 2>/dev/null || true
-          [ -f feed.xml ] && cp feed.xml dist/
-          touch dist/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+          mkdir -p public
+          [ -f public/.nojekyll ] || echo > public/.nojekyll
+          [ -f public/index.html ] || cat > public/index.html <<'HTML'
+          <!doctype html><meta charset="utf-8"><title>AI Saga Sphere</title>
+          <h1>AI Saga Sphere</h1><p>Codex feed: <a href="feed.xml">feed.xml</a></p>
+          HTML
+          # Preserve feed.xml if repo already has one
+          [ -f feed.xml ] && cp feed.xml public/feed.xml || true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
