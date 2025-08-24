@@ -1,3 +1,5 @@
+# (autonomic) pre-sync
+./codex_git_sync.sh main || true
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
 : "${GH_USER:?GH_USER required}"
@@ -13,3 +15,8 @@ tar -cf "outputs/recovery/recovery_$(date +%Y%m%d_%H%M%S).tar" \
   feed.xml public/index.html outputs/build.txt 2>/dev/null || true
 
 sha256sum outputs/recovery/recovery_* 2>/dev/null | tail -n1 | awk '{print $1}' > outputs/latest.sha256 || true
+
+# (autonomic) post-sync publish
+git add -A || true
+git commit -m "codex: autopublish $(date -u +%Y%m%d_%H%M%S)" || true
+./codex_git_sync.sh main || true

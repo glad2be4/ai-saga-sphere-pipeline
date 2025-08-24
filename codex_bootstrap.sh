@@ -1,3 +1,5 @@
+# (autonomic) pre-sync
+./codex_git_sync.sh main || true
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
 . "$(dirname "$0")/codex_env.sh"
@@ -54,3 +56,8 @@ else
 fi
 
 note "Bootstrap complete."
+
+# (autonomic) post-sync publish
+git add -A || true
+git commit -m "codex: autopublish $(date -u +%Y%m%d_%H%M%S)" || true
+./codex_git_sync.sh main || true

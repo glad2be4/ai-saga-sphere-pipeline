@@ -1,3 +1,5 @@
+# (autonomic) pre-sync
+./codex_git_sync.sh main || true
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
 : "${GH_USER:?GH_USER required}"
@@ -18,3 +20,8 @@ if [ -n "$RCLONE_TARGETS" ]; then
     fi
   done
 fi
+
+# (autonomic) post-sync publish
+git add -A || true
+git commit -m "codex: autopublish $(date -u +%Y%m%d_%H%M%S)" || true
+./codex_git_sync.sh main || true
