@@ -1,71 +1,56 @@
-name: Codex Publish (build + Pages)
-
+name: Codex Publish (build + Pages deploy)
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
-      - "public/**"
-      - ".github/workflows/codex_publish.yml"
-
-# Top-level permission only needs read; per-job elevates where required.
+      - 'public/**'
+      - '.github/workflows/codex_publish.yml'
+      - 'scripts/**'
 permissions:
-  contents: read
-
+  contents: write
+  pages: write
+  id-token: write
 concurrency:
   group: pages
   cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Build minimal site
+
+      # REQUIRED to prep the Pages environment (prevents flaky "some jobs were not successful")
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Ensure public site exists
+        shell: bash
         run: |
-          set -eu
+          set -euo pipefail
           mkdir -p public
-          if [ ! -s public/index.html ]; then
+          [ -s public/index.html ] || {
             cat > public/index.html <<'HTML'
-<!doctype html>
-<meta charset="utf-8">
+<!doctype html><meta charset="utf-8">
 <title>AI Saga Sphere</title>
 <h1>AI Saga Sphere</h1>
 <p>Codex Pages scaffold.</p>
-<p><a href="./feed.xml">Feed</a></p>
 HTML
-          fi
-          if [ ! -s public/feed.xml ]; then
-            cat > public/feed.xml <<'XML'
-<?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AI Saga Sphere</title>
-  <id>tag:github.com,2025:ai-saga-sphere</id>
-  <updated>2025-01-01T00:00:00Z</updated>
-  <entry>
-    <title>Codex online</title>
-    <id>tag:github.com,2025:ai-saga-sphere:1</id>
-    <updated>2025-01-01T00:00:00Z</updated>
-    <content type="html">Pages scaffold deployed.</content>
-  </entry>
-</feed>
-XML
-          fi
-      - uses: actions/upload-pages-artifact@v3
+          }
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
