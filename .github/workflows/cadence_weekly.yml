@@ -1,10 +1,17 @@
 name: Cadence: weekly QC + recovery + feed self-heal
-on: { schedule: [ { cron: '0 3 * * 1' } ], workflow_dispatch: {} }
-permissions: { contents: read }
+on:
+  schedule:
+    - cron: '0 3 * * 1'      # Monday 03:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   weekly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: QC / recovery / feed self-heal
-        run: echo "[weekly] QC task placeholder"
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "[weekly] QC task placeholder"

@@ -1,10 +1,17 @@
 name: Cadence: anniversary QC + recovery + feed self-heal
-on: { schedule: [ { cron: '0 3 24 8 *' } ], workflow_dispatch: {} }
-permissions: { contents: read }
+on:
+  schedule:
+    - cron: '0 3 24 8 *'     # Aug 24, 03:00 UTC (adjust if needed)
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   anniversary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: QC / recovery / feed self-heal
-        run: echo "[anniversary] QC task placeholder"
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "[anniversary] QC task placeholder"
