@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Run Log",
+  "type": "object",
+  "required": ["run_id","ts","host","repo","commit","status"],
+  "properties": {
+    "run_id": {"type":"string"},
+    "ts": {"type":"string","format":"date-time"},
+    "host": {"type":"string"},
+    "repo": {"type":"string"},
+    "commit": {"type":"string"},
+    "branch": {"type":"string"},
+    "status": {"type":"string","enum":["ok","warn","error"]},
+    "duration_s": {"type":"number"},
+    "artifacts": {"type":"array","items":{"type":"string"}},
+    "notes": {"type":"string"}
+  },
+  "additionalProperties": true
+}

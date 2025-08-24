@@ -1,19 +1,14 @@
 name: Cadence: weekly QC + recovery
 on:
-  schedule:
-    - cron: '0 3 * * 1'          # Mon 03:00 UTC
+  schedule: [ { cron: '0 3 * * 1' } ]   # Mon 03:00 UTC
   workflow_dispatch:
-
-permissions:
-  contents: read
-
+permissions: { contents: read }
 jobs:
   weekly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Weekly QC
-        shell: bash
+      - name: Weekly QC (placeholder)
         run: |
           set -euo pipefail
-          echo "[weekly] QC placeholder"
+          echo "[weekly] QC task"

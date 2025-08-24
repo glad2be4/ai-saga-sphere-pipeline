@@ -1,0 +1,18 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Usage: log_json /path/to.json key=value [key=value ...]
+set -euo pipefail
+f="$1"; shift
+tmp="$(mktemp)"
+if [ -s "$f" ]; then cp "$f" "$tmp"; else printf '{}\n' > "$tmp"; fi
+for kv in "$@"; do
+  k="${kv%%=*}"; v="${kv#*=}"
+  # detect numeric/bool/null vs string
+  if printf '%s' "$v" | grep -Eq '^(null|true|false|-?[0-9]+(\.[0-9]+)?)$'; then
+    jq --arg k "$k" --argjson v "$v" '.[$k]=$v' "$tmp" > "$tmp.jq"
+  else
+    jq --arg k "$k" --arg v "$v" '.[$k]=$v' "$tmp" > "$tmp.jq"
+  fi
+  mv "$tmp.jq" "$tmp"
+done
+mkdir -p "$(dirname "$f")"
+mv "$tmp" "$f"

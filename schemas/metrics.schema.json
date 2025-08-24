@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Metrics Log",
+  "type": "object",
+  "required": ["run_id","ts","metric_family","values"],
+  "properties": {
+    "run_id": {"type":"string"},
+    "ts": {"type":"string","format":"date-time"},
+    "metric_family": {"type":"string"},
+    "values": {"type":"object"},
+    "thresholds": {"type":"object"},
+    "verdict": {"type":"string","enum":["pass","fail","info"]}
+  },
+  "additionalProperties": true
+}

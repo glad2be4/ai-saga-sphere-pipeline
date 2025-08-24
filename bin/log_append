@@ -1,0 +1,5 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+file="$1"; shift || true
+ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+printf '[%s] %s\n' "$ts" "$*" >> "$file"

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Recovery Log",
+  "type": "object",
+  "required": ["run_id","ts","bundle","sha256","status"],
+  "properties": {
+    "run_id": {"type":"string"},
+    "ts": {"type":"string","format":"date-time"},
+    "bundle": {"type":"string"},
+    "sha256": {"type":"string"},
+    "status": {"type":"string","enum":["ok","warn","error"]},
+    "mirrors": {"type":"array","items":{"type":"string"}}
+  },
+  "additionalProperties": true
+}
