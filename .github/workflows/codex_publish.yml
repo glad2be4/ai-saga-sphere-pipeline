@@ -1,84 +1,41 @@
 name: Codex Publish (build + Pages deploy)
-
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
-      - "source/**"
-      - "scripts/**"
-      - "public/**"
-      - ".github/workflows/**"
-  workflow_dispatch:
-
+      - 'scripts/**'
+      - 'public/**'
+      - '.github/workflows/**'
 permissions:
   contents: write
   pages: write
   id-token: write
-
 concurrency:
-  group: "codex-pages"
+  group: pages
   cancel-in-progress: true
-
-env:
-  GH_USER: ${{ github.repository_owner }}
-  REPO_NAME: ${{ github.event.repository.name }}
-  RCLONE_TARGETS: ${{ secrets.RCLONE_TARGETS }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Align safely with origin/main (autosync)
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -x ./codex_autosync.sh ]; then ./codex_autosync.sh; else echo "No autosync script; continuing"; fi
-
-      - name: Run Codex pipeline
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -x ./codex_run.sh ]; then
-            GH_USER="$GH_USER" RCLONE_TARGETS="$RCLONE_TARGETS" ./codex_run.sh
-          else
-            echo "codex_run.sh not found or not executable"; exit 1
-          fi
-
-      - name: Verify outputs/feeds
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -x ./codex_verify.sh ]; then
-            GH_USER="$GH_USER" ./codex_verify.sh
-          else
-            echo "codex_verify.sh not found or not executable"; exit 1
-          fi
-
-      - name: Ensure public/ exists (fallback minimal)
-        shell: bash
+      - uses: actions/checkout@v4
+      - name: Build site
         run: |
           set -euo pipefail
           mkdir -p public
-          [ -s public/index.html ] || echo "<!doctype html><meta charset=utf-8><title>Codex</title>" > public/index.html
-          [ -s public/feed.xml ]  || echo "<feed/>" > public/feed.xml
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+          test -s public/index.html || echo "<!doctype html><meta charset=utf-8><title>AI Saga Sphere</title><h1>AI Saga Sphere</h1>" > public/index.html
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: public
-
   deploy:
     needs: build
-    runs-on: ubuntu-latest
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4

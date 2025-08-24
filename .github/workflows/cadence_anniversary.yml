@@ -1,20 +1,15 @@
 name: Cadence: anniversary QC + recovery + feed self-heal
-
 on:
   schedule:
-    - cron: "0 3 24 8 *"
+    - cron: '0 3 24 8 *'   # Aug 24, 03:00 UTC (adjust if needed)
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   anniversary:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: QC / recovery / feed self-heal
         shell: bash
         run: |
