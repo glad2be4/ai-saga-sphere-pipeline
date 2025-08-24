@@ -1,0 +1,13 @@
+# build artifacts & logs
+outputs/
+logs/
+recovery/
+*.tar
+*.tar.sha256
+*.log
+# temp
+*.tmp
+*.DS_Store
+# audio scratch / heavy intermediates (customize if you commit masters)
+audio/raw/
+work/

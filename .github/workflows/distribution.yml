@@ -1,0 +1,38 @@
+name: Codex Distribution Hub
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'public/feed.xml'
+      - 'scripts/**'
+      - '.github/workflows/distribution.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build distribution hub
+        env:
+          FEED_URL:    ${{ vars.FEED_URL }}
+          SPOTIFY_URL: ${{ vars.SPOTIFY_URL }}
+          APPLE_URL:   ${{ vars.APPLE_URL }}
+          AMAZON_URL:  ${{ vars.AMAZON_URL }}
+          DEEZER_URL:  ${{ vars.DEEZER_URL }}
+          IHEART_URL:  ${{ vars.IHEART_URL }}
+          TUNEIN_URL:  ${{ vars.TUNEIN_URL }}
+        run: |
+          set -euo pipefail
+          bash scripts/codex_distribution.sh
+      - name: Commit hub (if changed)
+        run: |
+          set -e
+          if ! git diff --quiet; then
+            git config user.name  "codex-bot"
+            git config user.email "codex-bot@users.noreply.github.com"
+            git add -A
+            git commit -m "Distribution: subscribe hub refresh"
+            git push
+          fi
