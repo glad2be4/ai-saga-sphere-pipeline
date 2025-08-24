@@ -1,10 +1,12 @@
 name: Cadence: anniversary QC
 on:
   schedule:
-    - cron: '0 3 24 8 *'   # Aug 24, 03:00 UTC
+    - cron: '0 3 24 8 *'         # Aug 24, 03:00 UTC
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
   anniversary:
     runs-on: ubuntu-latest
@@ -14,4 +16,4 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "[anniversary] QC task placeholder"
+          echo "[anniversary] QC placeholder"

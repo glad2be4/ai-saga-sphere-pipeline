@@ -3,17 +3,17 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "public/**"
-      - ".github/workflows/**"
+      - 'public/**'
+      - '.github/workflows/codex_publish.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
@@ -21,26 +21,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build site
-        shell: bash
+      - name: Ensure site exists
         run: |
           set -euo pipefail
           mkdir -p public
-          test -s public/index.html || echo '<!doctype html><meta charset=utf-8><title>AI Saga Sphere</title><h1>AI Saga Sphere</h1>' > public/index.html
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+          if [ ! -s public/index.html ]; then
+            cat > public/index.html <<'HTML'
+<!doctype html><meta charset="utf-8"><title>AI Saga Sphere</title>
+<h1>AI Saga Sphere</h1>
+<p>Codex Pages scaffold (autonomic).</p>
+HTML
+          fi
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
