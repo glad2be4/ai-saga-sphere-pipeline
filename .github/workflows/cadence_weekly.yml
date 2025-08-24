@@ -1,3 +1,25 @@
-name: Cadence — Weekly Excerpt
-on: { schedule: [ { cron: '5 9 * * 1' } ], workflow_dispatch: {} }
-jobs: { run: { runs-on: ubuntu-latest, steps: [ { uses: actions/checkout@v4 }, { run: sudo apt-get update -y && sudo apt-get install -y jq }, { run: CADENCE_MODE=weekly REPO_SLUG="${{ github.repository }}" FEED_URL="${{ vars.FEED_URL }}" bash scripts/cadence.sh } ] } }
+name: Cadence: weekly QC + recovery + feed self-heal
+
+on:
+  schedule:
+    # Every Monday 03:00 local (adjust as you like)
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Your QC / recovery / feed self-heal entrypoints go here.
+      # Keep them simple and fail-fast so the job stays green when nothing to do.
+      - name: QC / recovery / feed self-heal
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "[weekly] QC task placeholder"

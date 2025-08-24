@@ -1,32 +1,50 @@
-name: Codex Publish
+name: Codex Publish (Pages-safe)
+
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "source/**"
+      - "scripts/**"
+      - "public/**"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-deploy"
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Prepare Pages artifact
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Replace this with your actual site build; leave a no-op fallback
+      - name: Build site
         run: |
+          set -euo pipefail
           mkdir -p public
-          # Keep a tiny site so Pages always builds
-          echo "<!doctype html><meta charset=utf-8><title>AI Saga Sphere</title>" > public/index.html
-          echo "<feed/>" > public/feed.xml
-      - uses: actions/upload-pages-artifact@v3
+          # e.g., your build steps here…
+          # pnpm build / hugo / eleventy / etc.
+          echo "<html><body>AI Saga Sphere</body></html>" > public/index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -35,5 +53,8 @@ jobs:
       id-token: write
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/deploy-pages@v4
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
