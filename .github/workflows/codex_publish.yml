@@ -3,14 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths:
-      - 'scripts/**'
-      - 'public/**'
-      - '.github/workflows/**'
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+    paths: [ "scripts/**", "public/**", ".github/workflows/**" ]
+permissions: { contents: write, pages: write, id-token: write }
 concurrency: { group: pages, cancel-in-progress: true }
 jobs:
   build:
