@@ -1,3 +1,22 @@
-name: Cadence — Anniversary Echo
-on: { schedule: [ { cron: '11 11 1 1 *' } ], workflow_dispatch: {} }
-jobs: { run: { runs-on: ubuntu-latest, steps: [ { uses: actions/checkout@v4 }, { run: sudo apt-get update -y && sudo apt-get install -y jq }, { run: CADENCE_MODE=anniversary REPO_SLUG="${{ github.repository }}" FEED_URL="${{ vars.FEED_URL }}" bash scripts/cadence.sh } ] } }
+name: Cadence: anniversary QC + recovery + feed self-heal
+
+on:
+  schedule:
+    - cron: "0 3 24 8 *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  anniversary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: QC / recovery / feed self-heal
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "[anniversary] QC task placeholder"
