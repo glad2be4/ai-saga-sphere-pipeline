@@ -1,5 +1,4 @@
 name: Codex Publish
-
 on:
   push:
     branches: [ "main" ]
@@ -15,35 +14,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Ensure minimal feed.xml exists
-        shell: bash
+      - name: Prepare Pages artifact
         run: |
-          set -euo pipefail
-          if [ ! -f feed.xml ]; then
-            cat > feed.xml <<'XML'
-<?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AI Saga Sphere Pipeline</title>
-  <updated>2000-01-01T00:00:00Z</updated>
-  <id>tag:bootstrap</id>
-  <entry>
-    <title>Codex Bootstrap</title>
-    <updated>2000-01-01T00:00:00Z</updated>
-    <id>tag:codex-bootstrap</id>
-  </entry>
-</feed>
-XML
-          fi
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+          mkdir -p public
+          # Keep a tiny site so Pages always builds
+          echo "<!doctype html><meta charset=utf-8><title>AI Saga Sphere</title>" > public/index.html
+          echo "<feed/>" > public/feed.xml
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+          path: public
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/deploy-pages@v4
