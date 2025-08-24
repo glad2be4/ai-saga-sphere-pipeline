@@ -1,13 +1,1 @@
-name: Cadence: quarterly QC + recovery
-on:
-  schedule: [{ cron: "0 3 1 */3 *" }] # 1st of every quarter 03:00 UTC
-  workflow_dispatch:
-permissions: { contents: read }
-jobs:
-  quarterly:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          set -eu
-          echo "Quarterly QC task placeholder"
+# (paste corrected quarterly)
