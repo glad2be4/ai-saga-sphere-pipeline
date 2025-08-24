@@ -1,33 +1,62 @@
-name: Codex Publish (build + Pages deploy)
+name: Codex Publish (build + Pages)
+
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
-      - 'public/**'
-      - '.github/workflows/**'
+      - "public/**"
+      - ".github/workflows/codex_publish.yml"
+
+# Top-level permission only needs read; per-job elevates where required.
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
+
 concurrency:
   group: pages
   cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure public site exists
+      - name: Build minimal site
         run: |
-          set -euo pipefail
-          mkdir -p public/captions
-          test -s public/index.html || printf '<!doctype html><meta charset="utf-8"><title>AI Saga Sphere</title><h1>AI Saga Sphere</h1>\n' > public/index.html
-          test -s public/captions/master.vtt || printf 'WEBVTT\n\n00:00:00.000 --> 00:00:00.000\n(placeholder captions)\n' > public/captions/master.vtt
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v3
+          set -eu
+          mkdir -p public
+          if [ ! -s public/index.html ]; then
+            cat > public/index.html <<'HTML'
+<!doctype html>
+<meta charset="utf-8">
+<title>AI Saga Sphere</title>
+<h1>AI Saga Sphere</h1>
+<p>Codex Pages scaffold.</p>
+<p><a href="./feed.xml">Feed</a></p>
+HTML
+          fi
+          if [ ! -s public/feed.xml ]; then
+            cat > public/feed.xml <<'XML'
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>AI Saga Sphere</title>
+  <id>tag:github.com,2025:ai-saga-sphere</id>
+  <updated>2025-01-01T00:00:00Z</updated>
+  <entry>
+    <title>Codex online</title>
+    <id>tag:github.com,2025:ai-saga-sphere:1</id>
+    <updated>2025-01-01T00:00:00Z</updated>
+    <content type="html">Pages scaffold deployed.</content>
+  </entry>
+</feed>
+XML
+          fi
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: public
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
