@@ -1,0 +1,9 @@
+== Codex Run (embed QC checklist + Recovery Kit) ==
+⚠ Checklist not found at /data/data/com.termux/files/home/repo/ai-saga-sphere-pipeline/AI_SagaSphere_Consolidated_QC_Checklist.docx (skipping embed this run)
+✓ Recovery kit -> recovery_20250824_020358.tar
+== Mirrors ==
+→ rclone copy outputs/ → onedrive:AI_Saga_Sphere/outputs/
+→ rclone copy recovery/ → onedrive:AI_Saga_Sphere/recovery/
+→ rclone copy outputs/ → ipfs:ai-saga-sphere/outputs/
+→ rclone copy recovery/ → ipfs:ai-saga-sphere/recovery/
+== Run complete: 20250824_020358 ==
