@@ -6,36 +6,37 @@ on:
     paths:
       - 'public/**'
       - '.github/workflows/**'
-      - 'scripts/**'
 permissions:
   contents: write
   pages: write
   id-token: write
 concurrency:
-  group: github-pages
+  group: pages
   cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build site
+      - name: Ensure public site exists
         run: |
           set -euo pipefail
-          mkdir -p public
-          test -s public/index.html || echo "<!doctype html><meta charset=utf-8><title>AI Saga Sphere</title><h1>AI Saga Sphere</h1>" > public/index.html
-      - uses: actions/upload-pages-artifact@v3
+          mkdir -p public/captions
+          test -s public/index.html || printf '<!doctype html><meta charset="utf-8"><title>AI Saga Sphere</title><h1>AI Saga Sphere</h1>\n' > public/index.html
+          test -s public/captions/master.vtt || printf 'WEBVTT\n\n00:00:00.000 --> 00:00:00.000\n(placeholder captions)\n' > public/captions/master.vtt
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
   deploy:
     needs: build
+    runs-on: ubuntu-latest
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
