@@ -1,7 +1,11 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
-export GH_USER="'"$GH_USER"'"
-export REPO_NAME="'"$REPO_NAME"'"
-export REPO_DIR="$HOME/repo/$REPO_NAME"
-cd "$REPO_DIR"
-./codex_nightly.sh || true
+# Cancel if exists, then register
+termux-job-scheduler --cancel --job-id 9001 >/dev/null 2>&1 || true
+termux-job-scheduler \
+  --job-id 9001 \
+  --persisted true \
+  --period-ms 86400000 \
+  --require-charging true \
+  --network any \
+  --script "${PWD}/codex_nightly.sh"
