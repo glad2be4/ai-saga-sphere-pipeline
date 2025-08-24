@@ -2,12 +2,16 @@ name: Cadence: weekly QC + recovery + feed self-heal
 
 on:
   schedule:
-    # Every Monday 03:00 local (adjust as you like)
-    - cron: "0 3 * * 1"
+    - cron: "0 3 * * 1"       # Mondays 03:00 UTC
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  GH_USER: ${{ github.repository_owner }}
+  REPO_NAME: ${{ github.event.repository.name }}
+  RCLONE_TARGETS: ${{ secrets.RCLONE_TARGETS }}
 
 jobs:
   weekly:
@@ -16,10 +20,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Your QC / recovery / feed self-heal entrypoints go here.
-      # Keep them simple and fail-fast so the job stays green when nothing to do.
-      - name: QC / recovery / feed self-heal
+      - name: Align safely with origin/main (autosync)
         shell: bash
         run: |
           set -euo pipefail
-          echo "[weekly] QC task placeholder"
+          if [ -x ./codex_autosync.sh ]; then ./codex_autosync.sh; else echo "No autosync script; continuing"; fi
+
+      - name: Run Codex (spine + mirror + pipeline + recovery)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -x ./codex_run.sh ]; then
+            GH_USER="$GH_USER" RCLONE_TARGETS="$RCLONE_TARGETS" ./codex_run.sh
+          else
+            echo "codex_run.sh not found or not executable"; exit 1
+          fi
+
+      - name: Verify Codex (feed/pages integrity)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -x ./codex_verify.sh ]; then
+            GH_USER="$GH_USER" ./codex_verify.sh
+          else
+            echo "codex_verify.sh not found or not executable"; exit 1
+          fi
+
+      - name: Create and upload recovery kit
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovery_weekly
+          path: |
+            outputs/**
+            recovery/**
+          if-no-files-found: warn

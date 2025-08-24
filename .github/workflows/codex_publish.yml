@@ -1,4 +1,4 @@
-name: Codex Publish (Pages-safe)
+name: Codex Publish (build + Pages deploy)
 
 on:
   push:
@@ -16,8 +16,13 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages-deploy"
+  group: "codex-pages"
   cancel-in-progress: true
+
+env:
+  GH_USER: ${{ github.repository_owner }}
+  REPO_NAME: ${{ github.event.repository.name }}
+  RCLONE_TARGETS: ${{ secrets.RCLONE_TARGETS }}
 
 jobs:
   build:
@@ -25,22 +30,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Align safely with origin/main (autosync)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -x ./codex_autosync.sh ]; then ./codex_autosync.sh; else echo "No autosync script; continuing"; fi
 
-      # Replace this with your actual site build; leave a no-op fallback
-      - name: Build site
+      - name: Run Codex pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -x ./codex_run.sh ]; then
+            GH_USER="$GH_USER" RCLONE_TARGETS="$RCLONE_TARGETS" ./codex_run.sh
+          else
+            echo "codex_run.sh not found or not executable"; exit 1
+          fi
+
+      - name: Verify outputs/feeds
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -x ./codex_verify.sh ]; then
+            GH_USER="$GH_USER" ./codex_verify.sh
+          else
+            echo "codex_verify.sh not found or not executable"; exit 1
+          fi
+
+      - name: Ensure public/ exists (fallback minimal)
+        shell: bash
         run: |
           set -euo pipefail
           mkdir -p public
-          # e.g., your build steps here…
-          # pnpm build / hugo / eleventy / etc.
-          echo "<html><body>AI Saga Sphere</body></html>" > public/index.html
+          [ -s public/index.html ] || echo "<!doctype html><meta charset=utf-8><title>Codex</title>" > public/index.html
+          [ -s public/feed.xml ]  || echo "<feed/>" > public/feed.xml
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
@@ -53,8 +78,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to Pages
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
