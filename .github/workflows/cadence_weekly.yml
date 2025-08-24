@@ -1,27 +1,13 @@
-name: Cadence: weekly QC + recovery + feed self-heal
+name: Cadence: weekly QC + recovery
 on:
-  schedule:
-    - cron: '0 3 * * 1'
+  schedule: [{ cron: "0 3 * * 1" }]   # Mon 03:00 UTC
   workflow_dispatch:
-permissions:
-  contents: read
+permissions: { contents: read }
 jobs:
   weekly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Weekly QC
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "[weekly] QC task placeholder"
-          mkdir -p public/captions
-          printf 'WEBVTT\n\n00:00:00.000 --> 00:00:00.000\n(weekly placeholder)\n' > public/captions/master.vtt
-          sha256sum public/index.html | tee build_hashes.txt
-      - name: Upload Recovery Kit
-        uses: actions/upload-artifact@v4
-        with:
-          name: codex-recovery-weekly
-          path: |
-            public/**
-            build_hashes.txt
+      - run: |
+          set -eu
+          echo "Weekly QC task placeholder"

@@ -1,27 +1,13 @@
-name: Cadence: quarterly QC + recovery + feed self-heal
+name: Cadence: quarterly QC + recovery
 on:
-  schedule:
-    - cron: '0 3 1 */3 *'
+  schedule: [{ cron: "0 3 1 */3 *" }] # 1st of every quarter 03:00 UTC
   workflow_dispatch:
-permissions:
-  contents: read
+permissions: { contents: read }
 jobs:
   quarterly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Quarterly QC
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "[quarterly] QC task placeholder"
-          mkdir -p public/captions
-          printf 'WEBVTT\n\n00:00:00.000 --> 00:00:00.000\n(quarterly placeholder)\n' > public/captions/master.vtt
-          sha256sum public/index.html | tee build_hashes.txt
-      - name: Upload Recovery Kit
-        uses: actions/upload-artifact@v4
-        with:
-          name: codex-recovery-quarterly
-          path: |
-            public/**
-            build_hashes.txt
+      - run: |
+          set -eu
+          echo "Quarterly QC task placeholder"
