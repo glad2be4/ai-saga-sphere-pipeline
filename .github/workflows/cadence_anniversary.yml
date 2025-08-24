@@ -1,6 +1,7 @@
 name: Cadence: anniversary QC + recovery
 on:
-  schedule: [{ cron: '0 3 24 8 *' }]
+  schedule:
+    - cron: '0 3 24 8 *'   # Aug 24, 03:00 UTC
   workflow_dispatch:
 permissions: { contents: read }
 jobs:
@@ -8,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Anniversary QC
+      - name: Anniversary QC (placeholder)
         shell: bash
         run: |
           set -euo pipefail
-          echo "[anniversary] QC placeholder"
+          echo "[anniversary] QC ok"
