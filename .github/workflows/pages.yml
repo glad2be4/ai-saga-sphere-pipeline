@@ -2,31 +2,57 @@ name: Pages: build and deploy
 on:
   push:
     branches: [ "main" ]
-    paths: [ "public/**", ".github/workflows/pages.yml" ]
+    paths:
+      - "public/**"
+      - "recovery_kits/**"
+      - "scripts/build_kits_index.sh"
+      - "scripts/inject_home_badge.sh"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
-permissions: { contents: read, pages: write, id-token: write }
-concurrency: { group: "pages", cancel-in-progress: true }
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure public site exists
+
+      - name: Install jq (for index builder)
         run: |
           set -euo pipefail
-          mkdir -p public
-          test -s public/index.html || cat > public/index.html <<'HTML'
-<!doctype html><meta charset="utf-8">
-<title>AI Saga Sphere</title>
-<h1>AI Saga Sphere</h1>
-<p>Codex site scaffold.</p>
-HTML
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: public }
+          sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: Build /recovery index (HTML+JSON+badge)
+        run: |
+          set -euo pipefail
+          chmod +x scripts/build_kits_index.sh
+          ./scripts/build_kits_index.sh
+
+      - name: Inject homepage badge
+        run: |
+          set -euo pipefail
+          chmod +x scripts/inject_home_badge.sh
+          ./scripts/inject_home_badge.sh
+
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment: { name: github-pages, url: ${{ steps.deployment.outputs.page_url }} }
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
