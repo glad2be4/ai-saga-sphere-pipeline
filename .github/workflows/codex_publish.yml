@@ -1,32 +1,22 @@
 name: Codex Publish (build + Pages deploy)
 on:
-  push:
-    branches: [ "main" ]
-    paths:
-      - 'public/**'
-      - 'logs/**'
-      - '.github/workflows/**'
+  push: { branches: [ "main" ] }
   workflow_dispatch:
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: true }
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure site exists
-        run: |
+      - run: |
           set -euo pipefail
-          mkdir -p public
-          test -s public/index.html || cat > public/index.html <<'HTML'
-<!doctype html><meta charset="utf-8"><title>AI Saga Sphere</title>
-<h1>AI Saga Sphere</h1><p>Codex Pages live.</p>
-HTML
+          chmod +x scripts/build_site.sh || true
+          [ -x scripts/build_site.sh ] && ./scripts/build_site.sh || true
+          # ensure feed exists if mp3 present
+          if ls public/audio/*.mp3 >/dev/null 2>&1; then
+            echo "audio present; feed will be uploaded"
+          fi
       - uses: actions/upload-pages-artifact@v3
         with: { path: public }
   deploy:

@@ -1,25 +1,25 @@
-name: Cadence: weekly QC + Recovery Kit
+name: Codex Recovery Kit (daily)
 on:
-  schedule: [ { cron: "0 3 * * 1" } ]
+  schedule: [ { cron: "10 3 * * *" } ]
   workflow_dispatch:
 permissions: { contents: read }
-concurrency: { group: codex-weekly, cancel-in-progress: true }
+concurrency: { group: codex-recovery, cancel-in-progress: true }
 jobs:
-  weekly:
+  kit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update -y && sudo apt-get install -y ffmpeg sox jq
       - run: chmod +x bin/codex_recovery.sh || true
-      - name: Build kit from latest audio (if present)
+      - name: Build (use latest audio if present)
         run: |
           set -euo pipefail
           if ls public/audio/*.mp3 >/dev/null 2>&1; then
             latest="$(ls -1t public/audio/*.mp3 | head -n1)"
             bin/codex_recovery.sh "$latest"
-            echo "KIT_DIR=$(ls -1dt recovery_kits/* | head -n1)" >> $GITHUB_ENV
           else
-            echo "no audio available; exiting 0"; exit 0
+            echo "no audio available; skipping"; exit 0
           fi
+          echo "KIT_DIR=$(ls -1dt recovery_kits/* | head -n1)" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v4
-        with: { name: weekly-kit-${{ env.KIT_DIR }}, path: ${{ env.KIT_DIR }}, retention-days: 30 }
+        with: { name: codex-recovery-${{ env.KIT_DIR }}, path: ${{ env.KIT_DIR }}, retention-days: 30 }

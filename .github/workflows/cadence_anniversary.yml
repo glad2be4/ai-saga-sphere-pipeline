@@ -1,14 +1,25 @@
-name: Cadence: anniversary QC + recovery
+name: Cadence: anniversary QC + Recovery Kit
 on:
-  schedule: [ { cron: '0 3 24 8 *' } ]   # Aug 24, 03:00 UTC
+  schedule: [ { cron: "0 3 24 8 *" } ] # Aug 24
   workflow_dispatch:
 permissions: { contents: read }
+concurrency: { group: codex-anniversary, cancel-in-progress: true }
 jobs:
   anniversary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Anniversary QC (placeholder)
+      - run: sudo apt-get update -y && sudo apt-get install -y ffmpeg sox jq
+      - run: chmod +x bin/codex_recovery.sh || true
+      - name: Build kit from latest audio (if present)
         run: |
           set -euo pipefail
-          echo "[anniversary] QC task"
+          if ls public/audio/*.mp3 >/dev/null 2>&1; then
+            latest="$(ls -1t public/audio/*.mp3 | head -n1)"
+            bin/codex_recovery.sh "$latest"
+            echo "KIT_DIR=$(ls -1dt recovery_kits/* | head -n1)" >> $GITHUB_ENV
+          else
+            echo "no audio available; exiting 0"; exit 0
+          fi
+      - uses: actions/upload-artifact@v4
+        with: { name: anniversary-kit-${{ env.KIT_DIR }}, path: ${{ env.KIT_DIR }}, retention-days: 365 }
