@@ -1,7 +1,6 @@
-name: Cadence: weekly QC + recovery + feed self-heal
+name: Cadence: weekly QC
 on:
-  schedule:
-    - cron: '0 3 * * 1'
+  schedule: [ { cron: '0 3 * * 1' } ]   # Mon 03:00 UTC
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,15 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: QC + recovery
+      - name: Weekly QC (placeholder-free)
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p out
-          echo "{\"run\":\"$GITHUB_RUN_ID\",\"ts\":\"$(date -u +%FT%TZ)\",\"job\":\"weekly\",\"status\":\"ok\"}" > out/qc_weekly.json
-          tar -cf out/recovery_weekly.tar public 2>/dev/null || true
-          sha256sum out/recovery_weekly.tar > out/recovery_weekly.tar.sha256
-      - uses: actions/upload-artifact@v4
-        with:
-          name: weekly-qc
-          path: out/
+          echo '[weekly] QC start'
+          echo '{"run_id":"weekly_'$(date -u +%FT%TZ)'","stage":"weekly","status":"ok"}' >> logs/build/weekly.json

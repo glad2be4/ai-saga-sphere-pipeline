@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+logfile="$1"; stage="$2"; status="$3"; shift 3 || true
+mkdir -p "$(dirname "$logfile")"
+jq -nc --arg run_id "${RUN_ID:-manual}" \
+      --arg ts "$(date -u +%FT%TZ)" \
+      --arg stage "$stage" --arg status "$status" \
+      --argjson metrics "$(jq -nc "$*")" \
+      '{run_id:$run_id,ts:$ts,stage:$stage,status:$status,metrics:$metrics}' >> "$logfile"

@@ -1,45 +1,35 @@
-name: Codex Publish (Pages)
+name: Codex Publish
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'public/**'
-      - '.github/workflows/codex_publish.yml'
+      - "scripts/**"
+      - "public/**"
+      - ".github/workflows/codex_publish.yml"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure site exists
+      - name: Build codex artifacts
+        shell: bash
         run: |
           set -euo pipefail
           mkdir -p public
-          if [ ! -s public/index.html ]; then
-            cat > public/index.html <<'HTML'
-<!doctype html><meta charset="utf-8">
-<title>AI Saga Sphere</title>
-<h1>AI Saga Sphere</h1>
-<p>Codex Pages scaffold (autonomic).</p>
-HTML
-          fi
-          printf '{"run":"%s","ts":"%s"}\n' "$GITHUB_RUN_ID" "$(date -u +%FT%TZ)" > public/build.json
+          echo '<!-- codex build '$(date -u +%FT%TZ)' -->' >> public/index.html
       - uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
+        with: { path: public }
   deploy:
     needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

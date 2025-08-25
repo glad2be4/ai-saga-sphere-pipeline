@@ -4,14 +4,14 @@
   "type": "object",
   "required": ["run_id","ts","stage","status"],
   "properties": {
-    "run_id": {"type":"string"},
-    "ts": {"type":"string","format":"date-time"},
-    "stage": {"type":"string"},
-    "status": {"type":"string","enum":["ok","warn","error"]},
-    "inputs": {"type":"array","items":{"type":"string"}},
-    "outputs": {"type":"array","items":{"type":"string"}},
-    "sha256": {"type":"object","additionalProperties":{"type":"string"}},
-    "metrics": {"type":"object"}
+    "run_id": { "type":"string" },
+    "ts": { "type":"string", "format":"date-time" },
+    "stage": { "type":"string" },
+    "status": { "type":"string", "enum":["ok","warn","error"] },
+    "inputs": { "type":"array","items":{"type":"string"} },
+    "outputs": { "type":"array","items":{"type":"string"} },
+    "sha256": { "type":"object","additionalProperties":{"type":"string"} },
+    "metrics": { "type":"object" }
   },
   "additionalProperties": true
 }

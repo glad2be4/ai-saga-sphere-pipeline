@@ -1,25 +1,24 @@
-name: Codex Recovery Kit (daily)
+name: Codex Recovery
 on:
-  schedule: [ { cron: "10 3 * * *" } ]
   workflow_dispatch:
-permissions: { contents: read }
-concurrency: { group: codex-recovery, cancel-in-progress: true }
+permissions: { contents: write }
 jobs:
-  kit:
+  recover:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update -y && sudo apt-get install -y ffmpeg sox jq
-      - run: chmod +x bin/codex_recovery.sh || true
-      - name: Build (use latest audio if present)
+      - name: Make recovery kit
+        shell: bash
         run: |
           set -euo pipefail
-          if ls public/audio/*.mp3 >/dev/null 2>&1; then
-            latest="$(ls -1t public/audio/*.mp3 | head -n1)"
-            bin/codex_recovery.sh "$latest"
-          else
-            echo "no audio available; skipping"; exit 0
-          fi
-          echo "KIT_DIR=$(ls -1dt recovery_kits/* | head -n1)" >> $GITHUB_ENV
-      - uses: actions/upload-artifact@v4
-        with: { name: codex-recovery-${{ env.KIT_DIR }}, path: ${{ env.KIT_DIR }}, retention-days: 30 }
+          mkdir -p recovery
+          tar -cf recovery/site_${{ github.run_id }}.tar public 2>/dev/null || true
+          sha256sum recovery/site_${{ github.run_id }}.tar > recovery/site_${{ github.run_id }}.sha256 || true
+      - name: Commit recovery kit
+        run: |
+          git config user.name "codex-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add recovery || true
+          git commit -m "Recovery kit ${{ github.run_id }}" || true
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main || true

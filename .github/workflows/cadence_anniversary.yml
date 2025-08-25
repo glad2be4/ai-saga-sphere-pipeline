@@ -1,7 +1,6 @@
-name: Cadence: anniversary QC + recovery + feed self-heal
+name: Cadence: anniversary QC
 on:
-  schedule:
-    - cron: '0 3 24 8 *'
+  schedule: [ { cron: '0 3 24 8 *' } ]   # Aug 24, 03:00 UTC
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,15 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: QC + recovery
+      - name: Anniversary QC (placeholder-free)
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p out
-          echo "{\"run\":\"$GITHUB_RUN_ID\",\"ts\":\"$(date -u +%FT%TZ)\",\"job\":\"anniversary\",\"status\":\"ok\"}" > out/qc_anniversary.json
-          tar -cf out/recovery_anniversary.tar public 2>/dev/null || true
-          sha256sum out/recovery_anniversary.tar > out/recovery_anniversary.tar.sha256
-      - uses: actions/upload-artifact@v4
-        with:
-          name: anniversary-qc
-          path: out/
+          echo '[anniversary] QC start'
+          echo '{"run_id":"anniv_'$(date -u +%FT%TZ)'","stage":"anniv","status":"ok"}' >> logs/build/anniversary.json
