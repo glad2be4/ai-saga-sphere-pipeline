@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+bad=0
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  if [[ "$f" =~ \.jsonl$ ]]; then
+    ln=0
+    while IFS= read -r line || [ -n "$line" ]; do
+      ln=$((ln+1))
+      echo "$line" | jq -e . >/dev/null 2>&1 || { echo "❌ $f:$ln invalid JSON"; bad=1; break; }
+    done < "$f"
+  fi
+done < <(git diff --cached --name-only --diff-filter=ACM | grep -E '\.jsonl$' || true)
+if [ $bad -ne 0 ]; then
+  echo "Pre-commit blocked: fix invalid JSONL lines above."
+  exit 1
+fi
