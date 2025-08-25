@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
+#!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
-file="$1"; shift
-mkdir -p "$(dirname "$file")"
-printf '%s %s\n' "$(date -u +%FT%TZ)" "$*" >> "$file"
+f="$1"; shift; mkdir -p "$(dirname "$f")"
+printf '%s %s\n' "$(date -u +%FT%TZ)" "$*" >> "$f"

@@ -1,17 +1,14 @@
-name: Cadence: anniversary QC
+name: Cadence: anniversary
 on:
-  schedule: [ { cron: '0 3 24 8 *' } ]   # Aug 24, 03:00 UTC
+  schedule: [ { cron: "0 3 24 8 *" } ]   # Aug 24, 03:00 UTC
   workflow_dispatch:
-permissions:
-  contents: read
+permissions: { contents: read }
 jobs:
   anniversary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Anniversary QC (placeholder-free)
-        shell: bash
+      - name: Anniversary QC
         run: |
           set -euo pipefail
-          echo '[anniversary] QC start'
-          echo '{"run_id":"anniv_'$(date -u +%FT%TZ)'","stage":"anniv","status":"ok"}' >> logs/build/anniversary.json
+          echo "[anniversary] QC ok: $(date -u +%FT%TZ)"

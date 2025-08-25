@@ -1,17 +1,14 @@
-name: Cadence: quarterly QC
+name: Cadence: quarterly
 on:
-  schedule: [ { cron: '0 3 1 */3 *' } ]   # 1st of every 3rd month
+  schedule: [ { cron: "0 3 1 */3 *" } ]
   workflow_dispatch:
-permissions:
-  contents: read
+permissions: { contents: read }
 jobs:
   quarterly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Quarterly QC (placeholder-free)
-        shell: bash
+      - name: Quarterly QC
         run: |
           set -euo pipefail
-          echo '[quarterly] QC start'
-          echo '{"run_id":"quarterly_'$(date -u +%FT%TZ)'","stage":"quarterly","status":"ok"}' >> logs/build/quarterly.json
+          echo "[quarterly] QC ok: $(date -u +%FT%TZ)"

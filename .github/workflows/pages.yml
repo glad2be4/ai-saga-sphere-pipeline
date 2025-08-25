@@ -1,40 +1,32 @@
-name: pages build and deployment
+name: Pages: build and deploy
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - "public/**"
-      - ".github/workflows/pages.yml"
+    paths: [ "public/**", ".github/workflows/pages.yml" ]
   workflow_dispatch:
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: "pages", cancel-in-progress: true }
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Ensure public site exists
-        shell: bash
         run: |
           set -euo pipefail
           mkdir -p public
-          test -s public/index.html || echo '<!doctype html><meta charset=utf-8><title>AI Saga Sphere</title><h1>AI Saga Sphere</h1>' > public/index.html
+          test -s public/index.html || cat > public/index.html <<'HTML'
+<!doctype html><meta charset="utf-8">
+<title>AI Saga Sphere</title>
+<h1>AI Saga Sphere</h1>
+<p>Codex site scaffold.</p>
+HTML
       - uses: actions/upload-pages-artifact@v3
         with: { path: public }
   deploy:
     needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
+    environment: { name: github-pages, url: ${{ steps.deployment.outputs.page_url }} }
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

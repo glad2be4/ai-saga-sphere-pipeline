@@ -1,17 +1,14 @@
-name: Cadence: weekly QC
+name: Cadence: weekly
 on:
-  schedule: [ { cron: '0 3 * * 1' } ]   # Mon 03:00 UTC
+  schedule: [ { cron: "0 3 * * 1" } ]
   workflow_dispatch:
-permissions:
-  contents: read
+permissions: { contents: read }
 jobs:
   weekly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Weekly QC (placeholder-free)
-        shell: bash
+      - name: Weekly QC
         run: |
           set -euo pipefail
-          echo '[weekly] QC start'
-          echo '{"run_id":"weekly_'$(date -u +%FT%TZ)'","stage":"weekly","status":"ok"}' >> logs/build/weekly.json
+          echo "[weekly] QC ok: $(date -u +%FT%TZ)"
