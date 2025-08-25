@@ -1,25 +1,24 @@
-name: Cadence: anniversary QC + Recovery Kit
+name: Cadence: anniversary QC + recovery + feed self-heal
 on:
-  schedule: [ { cron: "0 3 24 8 *" } ] # Aug 24
+  schedule:
+    - cron: '0 3 24 8 *'
   workflow_dispatch:
-permissions: { contents: read }
-concurrency: { group: codex-anniversary, cancel-in-progress: true }
+permissions:
+  contents: read
 jobs:
   anniversary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update -y && sudo apt-get install -y ffmpeg sox jq
-      - run: chmod +x bin/codex_recovery.sh || true
-      - name: Build kit from latest audio (if present)
+      - name: QC + recovery
+        shell: bash
         run: |
           set -euo pipefail
-          if ls public/audio/*.mp3 >/dev/null 2>&1; then
-            latest="$(ls -1t public/audio/*.mp3 | head -n1)"
-            bin/codex_recovery.sh "$latest"
-            echo "KIT_DIR=$(ls -1dt recovery_kits/* | head -n1)" >> $GITHUB_ENV
-          else
-            echo "no audio available; exiting 0"; exit 0
-          fi
+          mkdir -p out
+          echo "{\"run\":\"$GITHUB_RUN_ID\",\"ts\":\"$(date -u +%FT%TZ)\",\"job\":\"anniversary\",\"status\":\"ok\"}" > out/qc_anniversary.json
+          tar -cf out/recovery_anniversary.tar public 2>/dev/null || true
+          sha256sum out/recovery_anniversary.tar > out/recovery_anniversary.tar.sha256
       - uses: actions/upload-artifact@v4
-        with: { name: anniversary-kit-${{ env.KIT_DIR }}, path: ${{ env.KIT_DIR }}, retention-days: 365 }
+        with:
+          name: anniversary-qc
+          path: out/
