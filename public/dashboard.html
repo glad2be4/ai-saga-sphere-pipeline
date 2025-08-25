@@ -1,0 +1,82 @@
+<!doctype html><meta charset="utf-8">
+<title>AI Saga Sphere — Codex Health Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--ok:#2ea043;--warn:#d4a72c;--err:#cf222e;--muted:#6e7781}
+  body{font:16px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial;margin:2rem;max-width:90ch}
+  h1{display:flex;align-items:center;gap:.75rem;margin:.2rem 0 1rem}
+  .pill{display:inline-block;padding:.15rem .6rem;border-radius:999px;color:#fff;font:12px system-ui}
+  .ok{background:var(--ok)} .warn{background:var(--warn)} .err{background:var(--err)}
+  .muted{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr;gap:1rem}
+  @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+  table{border-collapse:collapse;width:100%}
+  th,td{border-bottom:1px solid #eee;padding:.5rem;text-align:left;vertical-align:top}
+  code{background:#111;color:#0f0;padding:.15rem .35rem;border-radius:.2rem}
+  .mono{font-family:ui-monospace,Menlo,Consolas,Monaco,monospace}
+  .badge{height:20px;vertical-align:middle}
+</style>
+<h1>
+  Codex Health Dashboard
+  <img class="badge" src="/recovery/badge.svg" alt="audio QC badge">
+</h1>
+<p class="muted">Live view of Recovery Kits and Pages feed health. Kits require real audio and include LUFS / True Peak / LRA. Feed probe reflects the last Pages deploy.</p>
+
+<div class="grid">
+  <section>
+    <h2>Recovery Kits</h2>
+    <table id="kits"><thead>
+      <tr><th>Run</th><th>UTC</th><th>Status</th><th>QC (LUFS / TP / LRA)</th><th>Proof</th></tr>
+    </thead><tbody></tbody></table>
+  </section>
+
+  <section>
+    <h2>Pages Feed Health</h2>
+    <table id="feed"><thead><tr><th>When (UTC)</th><th>HTTP</th><th>Feed URL</th></tr></thead><tbody></tbody></table>
+    <p class="muted mono" id="feed-note"></p>
+  </section>
+</div>
+
+<script>
+async function getJSON(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error(url+': '+r.status); return r.json();}
+async function getJSONL(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) return []; const t=await r.text(); return t.trim()? t.trim().split(/\n/).map(x=>{try{return JSON.parse(x)}catch{return null}}).filter(Boolean):[];}
+
+function pill(status){
+  const span=document.createElement('span');span.className='pill '+(status==='green'?'ok':status==='amber'?'warn':'err');span.textContent=status;return span;
+}
+
+async function render(){
+  // Kits
+  let kits=[];
+  try{ kits = await getJSON('/recovery/index.json'); }catch(e){ console.warn('no kits index:', e); }
+  const kt = document.querySelector('#kits tbody'); kt.innerHTML='';
+  if(!kits.length){ kt.innerHTML='<tr><td colspan="5" class="muted">No kits yet.</td></tr>'; }
+  kits.slice(0,50).forEach(k=>{
+    const tr=document.createElement('tr');
+    const proofManifest = k.manifest? `<a href="/${k.manifest}">manifest</a>` : '<span class="muted">(none)</span>';
+    const proofHashes   = k.hashes?   `<a href="/${k.hashes}">sha256</a>`   : '<span class="muted">(none)</span>';
+    tr.innerHTML = `
+      <td><code>${k.run_id||''}</code></td>
+      <td>${k.ts||''}</td>
+      <td></td>
+      <td>${k.qc?.lufs ?? '-'} / ${k.qc?.tp ?? '-'} / ${k.qc?.lra ?? '-'}</td>
+      <td>${proofManifest} | ${proofHashes}</td>`;
+    tr.children[2].appendChild(pill(k.status||'amber'));
+    kt.appendChild(tr);
+  });
+
+  // Feed probe (latest 20)
+  let probes=[];
+  try{ probes = (await getJSONL('/logs/pages_probe.jsonl')).reverse(); }catch(e){ console.warn('no probe jsonl:', e); }
+  const ft = document.querySelector('#feed tbody'); ft.innerHTML='';
+  if(!probes.length){ ft.innerHTML='<tr><td colspan="3" class="muted">No feed probes yet.</td></tr>'; }
+  probes.slice(0,20).forEach(p=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${p.ts||''}</td><td class="mono">${p.http??''}</td><td><a href="${p.feed_url||'#'}">${p.feed_url||''}</a></td>`;
+    ft.appendChild(tr);
+  });
+  document.querySelector('#feed-note').textContent = `Total probes: ${probes.length || 0}`;
+}
+
+render().catch(console.error);
+</script>

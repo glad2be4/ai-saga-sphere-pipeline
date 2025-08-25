@@ -5,8 +5,10 @@ on:
     paths:
       - "public/**"
       - "recovery_kits/**"
+      - "logs/distribution/pages_probe.jsonl"
       - "scripts/build_kits_index.sh"
       - "scripts/inject_home_badge.sh"
+      - "scripts/build_dashboard.sh"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -25,22 +27,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install jq (for index builder)
+      - name: Install jq for builders
         run: |
           set -euo pipefail
           sudo apt-get update -y && sudo apt-get install -y jq
 
+      - name: Stage latest feed probe to public/logs/pages_probe.jsonl
+        run: |
+          set -euo pipefail
+          chmod +x scripts/build_dashboard.sh 2>/dev/null || true
+          [ -x scripts/build_dashboard.sh ] && ./scripts/build_dashboard.sh || echo "no builder; skipping probe stage"
+
       - name: Build /recovery index (HTML+JSON+badge)
         run: |
           set -euo pipefail
-          chmod +x scripts/build_kits_index.sh
-          ./scripts/build_kits_index.sh
+          chmod +x scripts/build_kits_index.sh 2>/dev/null || true
+          [ -x scripts/build_kits_index.sh ] && ./scripts/build_kits_index.sh || echo "no kits index builder; skipping"
 
-      - name: Inject homepage badge
+      - name: Inject homepage badge (if script exists)
         run: |
           set -euo pipefail
-          chmod +x scripts/inject_home_badge.sh
-          ./scripts/inject_home_badge.sh
+          chmod +x scripts/inject_home_badge.sh 2>/dev/null || true
+          [ -x scripts/inject_home_badge.sh ] && ./scripts/inject_home_badge.sh || echo "no home-badge injector; skipping"
+
+      - name: Ensure dashboard exists
+        run: |
+          set -euo pipefail
+          [ -s public/dashboard.html ] || { echo "dashboard missing"; exit 1; }
 
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
