@@ -6,7 +6,13 @@
   "properties": {
     "ts": { "type": "string", "format": "date-time" },
     "run_id": { "type": "string" },
-    "category": { "type": "string", "enum": ["narration","feed","distribution","recovery","redundancy","notarization","qc"] },
+    "category": {
+      "type": "string",
+      "enum": [
+        "narration", "feed", "distribution", "recovery", "redundancy",
+        "notarization", "qc", "immersion", "accessibility", "market"
+      ]
+    },
     "stage": { "type": "string" },
     "status": { "type": "string", "enum": ["ok","warn","error","skip"] },
     "endpoint": { "type": "string" },
@@ -15,19 +21,32 @@
     "feed_url": { "type": "string" },
     "cid": { "type": "string" },
     "ipns": { "type": "string" },
+    "http": { "type": ["integer","string"] },
+    "reason": { "type": "string" },
+    "notes": { "type": "string" },
     "metrics": {
       "type": "object",
       "properties": {
         "lufs": { "type": "number" },
-        "tp": { "type": "number" },
-        "lra": { "type": "number" },
-        "voices": { "type": "array", "items": { "type": "string" } },
-        "emotions": { "type": "array", "items": { "type": "string" } }
-      }
+        "tp":   { "type": "number" },
+        "lra":  { "type": "number" },
+        "pace_wpm": { "type": "number" },
+        "duck_db":  { "type": "number" },
+        "sfx_db":   { "type": "number" },
+        "voices":   { "type": "array", "items": { "type": "string" } },
+        "emotions": { "type": "array", "items": { "type": "string" } },
+        "lang":     { "type": "string" },
+        "subs":     {
+          "type": "array",
+          "items": { "type": "object", "properties": {
+            "lang": { "type": "string" },
+            "file": { "type": "string" },
+            "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+          }, "required": ["lang","file"] }
+        }
+      },
+      "additionalProperties": true
     },
-    "http": { "type": ["integer","string"] },
-    "reason": { "type": "string" },
-    "notes": { "type": "string" },
     "meta": { "type": "object" }
   },
   "additionalProperties": true
