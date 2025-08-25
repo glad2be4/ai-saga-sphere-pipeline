@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Backward wrapper: promote old ad-hoc JSON to Codex v2 (assumes valid JSON)
+set -euo pipefail
+file="${1:?}"; shift
+json="${1:?}"
+mkdir -p "$(dirname "$file")"
+ts="$(date -u +%FT%TZ)"
+run_id="${RUN_ID:-codex_$(date -u +%Y%m%d_%H%M%S)}"
+# If the object already looks like a v2 event, append; else wrap under qc category
+if echo "$json" | jq -e 'has("category") and has("stage") and has("status")' >/dev/null 2>&1; then
+  echo "$json" | jq -c . >> "$file"
+else
+  echo "$json" | jq -c --arg ts "$ts" --arg run_id "$run_id" '. + {ts:$ts,run_id:$run_id,category:"qc",stage:"legacy",status:"ok"}' >> "$file"
+fi

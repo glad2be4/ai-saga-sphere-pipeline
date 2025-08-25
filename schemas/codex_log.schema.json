@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex Log Event",
+  "type": "object",
+  "required": ["ts", "run_id", "category", "stage", "status"],
+  "properties": {
+    "ts": { "type": "string", "format": "date-time" },
+    "run_id": { "type": "string" },
+    "category": { "type": "string", "enum": ["narration","feed","distribution","recovery","redundancy","notarization","qc"] },
+    "stage": { "type": "string" },
+    "status": { "type": "string", "enum": ["ok","warn","error","skip"] },
+    "endpoint": { "type": "string" },
+    "file": { "type": "string" },
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "feed_url": { "type": "string" },
+    "cid": { "type": "string" },
+    "ipns": { "type": "string" },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "lufs": { "type": "number" },
+        "tp": { "type": "number" },
+        "lra": { "type": "number" },
+        "voices": { "type": "array", "items": { "type": "string" } },
+        "emotions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "http": { "type": ["integer","string"] },
+    "reason": { "type": "string" },
+    "notes": { "type": "string" },
+    "meta": { "type": "object" }
+  },
+  "additionalProperties": true
+}
