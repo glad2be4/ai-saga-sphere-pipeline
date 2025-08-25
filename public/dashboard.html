@@ -79,4 +79,29 @@ async function render(){
 }
 
 render().catch(console.error);
+
+// === Compliance banner ===
+async function banner(){
+  try{
+    const r=await fetch("/logs/compliance_report.json",{cache:"no-store"});
+    if(!r.ok){document.getElementById("release-banner").innerHTML="<p class=\"muted\">No compliance report yet.</p>";return;}
+    const c=await r.json();
+    let status="unknown", color="#6e7781", text="Status: unknown";
+    if(c && typeof c.pass==="boolean"){
+      if(c.pass){ status="pass"; color="#2ea043"; text="Release‑ready (gate: PASS)"; }
+      else      { status="fail"; color="#cf222e"; text="Not release‑ready (gate: FAIL)"; }
+    } else if(c && c.reasons && c.reasons.includes("skip_ok")) {
+      status="skip"; color="#d4a72c"; text="Release‑pending (gate: SKIP OK)";
+    }
+    const reasons=(c && c.reasons && c.reasons.length)?(" • "+c.reasons.join(", ")): "";
+    document.getElementById("release-banner").innerHTML =
+      `<div style="display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;border-radius:8px;background:20;border:1px solid ">
+         <div style="width:10px;height:10px;border-radius:50%;background:"></div>
+         <div style="font-weight:600;color:#222"></div>
+         <div class="muted" style="font-size:.9rem"></div>
+       </div>`;
+  }catch(e){ console.warn("compliance banner:",e); }
+}
+banner();
+// === end banner ===
 </script>

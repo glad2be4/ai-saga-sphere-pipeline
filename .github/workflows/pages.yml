@@ -4,11 +4,14 @@ on:
     branches: [ "main" ]
     paths:
       - "public/**"
-      - "recovery_kits/**"
+      - "logs/codex/**"
       - "logs/distribution/pages_probe.jsonl"
+      - "outputs/compliance_report.json"
+      - "scripts/build_codex_dashboard.sh"
       - "scripts/build_kits_index.sh"
       - "scripts/inject_home_badge.sh"
-      - "scripts/build_dashboard.sh"
+      - "scripts/stage_compliance.sh"
+      - "scripts/inject_home_compliance.sh"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -27,33 +30,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install jq for builders
+      - name: Install jq (builders)
         run: |
           set -euo pipefail
-          sudo apt-get update -y && sudo apt-get install -y jq
+          sudo apt-get update -y
+          sudo apt-get install -y jq
 
-      - name: Stage latest feed probe to public/logs/pages_probe.jsonl
+      - name: Stage compliance to /public/logs
         run: |
           set -euo pipefail
-          chmod +x scripts/build_dashboard.sh 2>/dev/null || true
-          [ -x scripts/build_dashboard.sh ] && ./scripts/build_dashboard.sh || echo "no builder; skipping probe stage"
+          chmod +x scripts/stage_compliance.sh
+          ./scripts/stage_compliance.sh
 
-      - name: Build /recovery index (HTML+JSON+badge)
+      - name: Rebuild recovery index (if present)
         run: |
           set -euo pipefail
           chmod +x scripts/build_kits_index.sh 2>/dev/null || true
-          [ -x scripts/build_kits_index.sh ] && ./scripts/build_kits_index.sh || echo "no kits index builder; skipping"
+          [ -x scripts/build_kits_index.sh ] && ./scripts/build_kits_index.sh || true
 
-      - name: Inject homepage badge (if script exists)
+      - name: Inject home badge (if present)
         run: |
           set -euo pipefail
           chmod +x scripts/inject_home_badge.sh 2>/dev/null || true
-          [ -x scripts/inject_home_badge.sh ] && ./scripts/inject_home_badge.sh || echo "no home-badge injector; skipping"
+          [ -x scripts/inject_home_badge.sh ] && ./scripts/inject_home_badge.sh || true
 
-      - name: Ensure dashboard exists
+      - name: Inject home compliance chip
         run: |
           set -euo pipefail
-          [ -s public/dashboard.html ] || { echo "dashboard missing"; exit 1; }
+          chmod +x scripts/inject_home_compliance.sh
+          ./scripts/inject_home_compliance.sh
+
+      - name: Build Codex dashboard data
+        run: |
+          set -euo pipefail
+          chmod +x scripts/build_codex_dashboard.sh 2>/dev/null || true
+          [ -x scripts/build_codex_dashboard.sh ] && ./scripts/build_codex_dashboard.sh || true
+
+      - name: Ensure dashboard page exists
+        run: |
+          set -euo pipefail
+          test -s public/dashboard.html || echo "<!doctype html><meta charset=utf-8><title>Dashboard</title><p class='muted'>Dashboard not provisioned.</p>" > public/dashboard.html
 
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3

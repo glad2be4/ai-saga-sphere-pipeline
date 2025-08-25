@@ -12,6 +12,7 @@ MP3="$(scripts/master.sh "$RAW")"
 PKG="$(scripts/package.sh "$MP3")"
 
 # Recovery kit
+[ -x scripts/notarize_capture.sh ] && scripts/notarize_capture.sh || true
 KIT="$(bin/codex_recovery.sh)"
 echo "[pipeline] packaged: $PKG ; kit: $KIT" >> "$LOG"
 
