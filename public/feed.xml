@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AI Saga Sphere Pipeline</title>
-  <id>https://glad2be4.github.io/ai-saga-sphere-pipeline/</id>
-  <updated>2025-08-24T16:41:17Z</updated>
-  <link rel="self" href="feed.xml"/>
-</feed>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>AI Saga Sphere</title>
+    <link>https://<your_github_username>.github.io/ai-saga-sphere-pipeline/</link>
+    <description>An autonomic codex of audio sagas.</description>
+    <language>en-us</language>
+    <managingEditor>you@example.com (glad2be4)</managingEditor>
+    <itunes:author>glad2be4</itunes:author>
+    <itunes:owner>
+      <itunes:name>glad2be4</itunes:name>
+      <itunes:email>you@example.com</itunes:email>
+    </itunes:owner>
+    <itunes:image href="https://<your_github_username>.github.io/ai-saga-sphere-pipeline/podcast.jpg"/>
+    <atom:link href="https://<your_github_username>.github.io/ai-saga-sphere-pipeline/feed.xml" rel="self" type="application/rss+xml"/>
+    <!-- Optional sample item; replace with real episode later -->
+    <item>
+      <title>Welcome</title>
+      <description>Welcome to AI Saga Sphere.</description>
+      <guid>https://<your_github_username>.github.io/ai-saga-sphere-pipeline/audio/welcome.mp3</guid>
+      <enclosure url="https://<your_github_username>.github.io/ai-saga-sphere-pipeline/audio/welcome.mp3" length="0" type="audio/mpeg"/>
+      <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>

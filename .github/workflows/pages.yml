@@ -1,87 +1,37 @@
-name: Pages: build and deploy
+name: pages build and deployment
 on:
   push:
-    branches: [ "main" ]
-    paths:
-      - "public/**"
-      - "logs/codex/**"
-      - "logs/distribution/pages_probe.jsonl"
-      - "outputs/compliance_report.json"
-      - "scripts/build_codex_dashboard.sh"
-      - "scripts/build_kits_index.sh"
-      - "scripts/inject_home_badge.sh"
-      - "scripts/stage_compliance.sh"
-      - "scripts/inject_home_compliance.sh"
-      - ".github/workflows/pages.yml"
+    branches: [ main ]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install jq (builders)
+      - name: Ensure site exists
         run: |
-          set -euo pipefail
-          sudo apt-get update -y
-          sudo apt-get install -y jq
-
-      - name: Stage compliance to /public/logs
-        run: |
-          set -euo pipefail
-          chmod +x scripts/stage_compliance.sh
-          ./scripts/stage_compliance.sh
-
-      - name: Rebuild recovery index (if present)
-        run: |
-          set -euo pipefail
-          chmod +x scripts/build_kits_index.sh 2>/dev/null || true
-          [ -x scripts/build_kits_index.sh ] && ./scripts/build_kits_index.sh || true
-
-      - name: Inject home badge (if present)
-        run: |
-          set -euo pipefail
-          chmod +x scripts/inject_home_badge.sh 2>/dev/null || true
-          [ -x scripts/inject_home_badge.sh ] && ./scripts/inject_home_badge.sh || true
-
-      - name: Inject home compliance chip
-        run: |
-          set -euo pipefail
-          chmod +x scripts/inject_home_compliance.sh
-          ./scripts/inject_home_compliance.sh
-
-      - name: Build Codex dashboard data
-        run: |
-          set -euo pipefail
-          chmod +x scripts/build_codex_dashboard.sh 2>/dev/null || true
-          [ -x scripts/build_codex_dashboard.sh ] && ./scripts/build_codex_dashboard.sh || true
-
-      - name: Ensure dashboard page exists
-        run: |
-          set -euo pipefail
-          test -s public/dashboard.html || echo "<!doctype html><meta charset=utf-8><title>Dashboard</title><p class='muted'>Dashboard not provisioned.</p>" > public/dashboard.html
-
+          set -Eeuo pipefail
+          test -s public/index.html || { echo "missing index"; exit 1; }
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
-
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
-      - id: deployment
+      - name: Deploy to Pages
+        id: deployment
         uses: actions/deploy-pages@v4
